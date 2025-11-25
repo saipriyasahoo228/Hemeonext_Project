@@ -8,13 +8,13 @@ import banner6 from "../../assets/banner6.jpg";
 
 const categoriesWithIcon = [
   {
-    id: "cold-cough",
+    id: "cold-cough-relief",
     label: "Cold & Cough Relief",
     image: "/assets/cold.jpg",
     description: "Gentle remedies for runny nose, sore throat, sneezing and cough — safe for daily family use.",
   },
   {
-    id: "digestive-care",
+    id: "digestive-stomach-care",
     label: "Digestive & Stomach Care",
     image: "/assets/digestive.jpg",
     description: "Natural support for acidity, indigestion, gas and bloating to restore digestive balance.",
@@ -26,7 +26,7 @@ const categoriesWithIcon = [
     description: "Daily homeopathic formulations to strengthen your natural defenses and vitality.",
   },
   {
-    id: "pain-relief",
+    id: "joint-pain-relife",
     label: "Pain & Joint Relief",
     image: "/assets/jointpain.jpg",
     description: "Non-addictive, holistic relief for headaches, muscle & joint pain and inflammation.",
@@ -38,7 +38,7 @@ const categoriesWithIcon = [
     description: "Soothing, gentle remedies for acne, rashes, dandruff and scalp health.",
   },
   {
-    id: "kids-homeopathy",
+    id: "kids-baby-care",
     label: "Kids & Baby Care",
     image: "/assets/kids.jpg",
     description: "Mild, child-friendly homeopathic solutions for teething, fever, colds and routine care.",
