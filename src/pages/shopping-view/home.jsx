@@ -44,6 +44,7 @@ import test4 from "../../../public/assets/test4.jpg";
 
 // API client function
 import { fetchBrands, fetchCategories } from "../../api/productApi";
+import ProductGrid from "./homeproduct";
 
 const dummyImages = [
   oil,
@@ -701,6 +702,7 @@ export default function HomeopathicLayout() {
 
       {/* Popular Tests Carousel */}
       <ScrollableCarousel items={popularTests} title="Popular Tests" navigate={navigate} type="tests" />
+      <ProductGrid/>
 
       
        {/* CTA SECTION - Edge to Edge */}
