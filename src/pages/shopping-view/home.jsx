@@ -14,7 +14,7 @@ import jointpain from "../../../public/assets/jointpain.jpg";
 import kids from "../../../public/assets/kids.jpg";
 import offer1 from "../../../public/assets/offer1.jpg";
 import urinary from "../../../public/assets/urinary.jpg";
-import diabetes from "../../../public/assets/diabetes.jpeg";
+import diabetes from "../../../public/assets/diabetes.jpeg";  
 import warts from "../../../public/assets/warts.jpg";
 import cholesterol from "../../../public/assets/cholesterol.webp";
 
@@ -644,13 +644,13 @@ export default function HomeopathicLayout() {
           >
             <Button
               onClick={() => navigate("/shop/listing")}
-              className="px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg text-lg"
+              className="px-8 py-4 bg-green-600 hover:bg-blue-700 text-white font-semibold rounded-lg text-lg"
             >
               Shop All Products
             </Button>
             <Button
               variant="outline"
-              className="px-8 py-4 border-2 border-blue-600 text-blue-600 hover:bg-blue-50 font-semibold rounded-lg text-lg"
+              className="px-8 py-4 border-2 border-green-600 text-blue-600 hover:bg-blue-50 font-semibold rounded-lg text-lg"
             >
               Book Consultation
             </Button>
@@ -670,7 +670,7 @@ export default function HomeopathicLayout() {
               href="https://www.intulet.com/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-400 hover:underline transition-colors duration-300"
+              className="text-green-400 hover:underline transition-colors duration-300"
             >
               Intulet Technologies
             </a>
@@ -691,7 +691,7 @@ export default function HomeopathicLayout() {
           <div className="mt-8">
             <Button
               onClick={() => navigate("/shop/listing")}
-              className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg"
+              className="px-6 py-3 bg-green-600 hover:bg-blue-700 text-white font-semibold rounded-lg"
             >
               Browse All Products
             </Button>

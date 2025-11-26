@@ -112,7 +112,7 @@ px-4 py-3
                 className="text-6xl font-bold italic text-white cursor-pointer -mt-5"
                 onClick={() => navigate("/shop/home")}
               >
-                Hemeonext
+                Homeonext
               </h1>
             </motion.div>
 
@@ -179,7 +179,10 @@ px-4 py-3
               />
               <Button
                 size="icon"
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-orange-500 to-pink-500 text-white h-8 w-8 rounded-full hover:from-orange-600 hover:to-pink-600"
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 
+bg-gradient-to-r from-[rgb(200,255,200)] to-[rgb(34,197,94)] 
+text-white h-8 w-8 rounded-full 
+hover:from-[rgb(180,255,180)] hover:to-[rgb(22,163,74)]"
                 onClick={handleSearch}
               >
                 <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
