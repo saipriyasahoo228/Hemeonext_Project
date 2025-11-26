@@ -731,34 +731,72 @@ import { useState, useEffect, useRef } from "react";
 import banner4 from "../../assets/banner_homeo1.webp";
 import banner5 from "../../assets/banner5.jpg";
 import banner6 from "../../assets/banner6.jpg";
+// Dummy Images
+import oil from "../../../public/assets/oil.jpg";
+import cold from "../../../public/assets/cold.jpg";
+import digestive from "../../../public/assets/digestive.jpg";
+import immunity from "../../../public/assets/immunity.jpg";
+import jointpain from "../../../public/assets/jointpain.jpg";
+import kids from "../../../public/assets/kids.jpg";
+import offer1 from "../../../public/assets/offer1.jpg";
+import urinary from "../../../public/assets/urinary.jpg";
+import diabetes from "../../../public/assets/diabetes.jpeg";
+import warts from "../../../public/assets/warts.jpg";
+import cholesterol from "../../../public/assets/cholesterol.webp";
+
+// Brand Logos
+import sblLogo from "../../../public/assets/SBL_logo.jpg";
+import ainsworths from "../../../public/assets/Ainsworths.webp";
+import drBatra from "../../../public/assets/Dr. Batra’s.webp";
+import nelsons from "../../../public/assets/Nelsons.jpg";
+import bJain from "../../../public/assets/B. Jain.jpg";
+import medisynth from "../../../public/assets/Medisynth.jpg";
+import bioforce from "../../../public/assets/Bioforce.jpg";
+import adel from "../../../public/assets/Adel.webp";
+
+// Special Offers
+import spOffer1 from "../../../public/assets/offer1.jpg";
+import spOffer2 from "../../../public/assets/offer2.jpg";
+import spOffer3 from "../../../public/assets/offer3.jpg";
+import spOffer4 from "../../../public/assets/offer4.jpg";
+import spOffer5 from "../../../public/assets/offer5.jpg";
+
+// Popular Tests
+import test1 from "../../../public/assets/test1.jpg";
+import test2 from "../../../public/assets/test2.jpg";
+import test3 from "../../../public/assets/test3.jpg";
+import test4 from "../../../public/assets/test4.jpg";
+
 
 // API client function
 import { fetchBrands, fetchCategories } from "../../api/productApi";
 
 const dummyImages = [
-  "/public/assets/oil.jpg",
-  "/public/assets/cold.jpg",
-  "/public/assets/digestive.jpg",
-  "/public/assets/immunity.jpg",
-  "/public/assets/jointpain.jpg",
-  "/public/assets/kids.jpg",
-  "/public/assets/offer1.jpg",
-  "/public/assets/urinary.jpg",
-  "/public/assets/diabetes.jpeg",
-  "/public/assets/warts.jpg",
-  "/public/assets/cholesterol.webp",
+  oil,
+  cold,
+  digestive,
+  immunity,
+  jointpain,
+  kids,
+  offer1,
+  urinary,
+  diabetes,
+  warts,
+  cholesterol,
 ];
 
+
 const dummyBrandLogos = [
-  "/public/assets/SBL_logo.jpg",
-  "/public/assets/Ainsworths.webp",
-  "/public/assets/Dr. Batra’s.webp",
-  "/public/assets/Nelsons.jpg",
-  "/public/assets/B. Jain.jpg",
-  "/public/assets/Medisynth.jpg",
-  "/public/assets/Bioforce.jpg",
-  "/public/assets/Adel.webp",
+  sblLogo,
+  ainsworths,
+  drBatra,
+  nelsons,
+  bJain,
+  medisynth,
+  bioforce,
+  adel,
 ];
+
 
 const specialOffers = [
   {
