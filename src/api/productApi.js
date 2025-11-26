@@ -34,6 +34,8 @@ export const fetchCategories = async () => {
     throw error;
   }
 };
+
+
 export const fetchCategoryById = async (id) => {
   try {
     const response = await apiClient.get(`/products/categories/${id}/`);
