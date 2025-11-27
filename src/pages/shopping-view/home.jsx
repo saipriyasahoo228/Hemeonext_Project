@@ -28,18 +28,7 @@ import medisynth from "../../../public/assets/Medisynth.jpg";
 import bioforce from "../../../public/assets/Bioforce.jpg";
 import adel from "../../../public/assets/Adel.webp";
 
-// Special Offers
-import spOffer1 from "../../../public/assets/offer1.jpg";
-import spOffer2 from "../../../public/assets/offer2.jpg";
-import spOffer3 from "../../../public/assets/offer3.jpg";
-import spOffer4 from "../../../public/assets/offer4.jpg";
-import spOffer5 from "../../../public/assets/offer5.jpg";
 
-// Popular Tests
-import test1 from "../../../public/assets/test1.jpg";
-import test2 from "../../../public/assets/test2.jpg";
-import test3 from "../../../public/assets/test3.jpg";
-import test4 from "../../../public/assets/test4.jpg";
 
 
 // API client function
@@ -436,7 +425,7 @@ const ScrollableCarousel = ({ items, title, navigate, type = "offers" }) => {
                     <Button
                       onClick={() => navigate(type === "offers" ? `/offers/${item.id}` : `/tests/${item.id}`)}
                       className={`w-full py-2 rounded-lg font-semibold ${
-                        type === "offers" ? "bg-blue-600 hover:bg-blue-700 text-white" : "bg-green-600 hover:bg-green-700 text-white"
+                        type === "offers" ? "bg-green-600 hover:bg-green-800 text-white" : "bg-green-600 hover:bg-green-700 text-white"
                       }`}
                     >
                       {type === "offers" ? "Grab Offer" : "Book Test"}
@@ -471,10 +460,10 @@ const ScrollableCarousel = ({ items, title, navigate, type = "offers" }) => {
 const BrandCard = ({ brand, index }) => {
   return (
     <motion.div
-      className="flex flex-col items-center bg-white rounded-lg p-4 cursor-pointer border border-gray-200 shadow-md"
+      className="flex flex-col items-center bg-white rounded-lg p-4 cursor-pointer"
       whileHover={{
         scale: 1.05,
-         boxShadow: "0 15px 35px rgba(40, 27, 27, 0.35)",
+         boxShadow: "0 15px 35px rgba(16, 245, 9, 0.35)",
         rotate: [0, -2, 2, -2, 2, 0], // vibrate effect
       }}
       transition={{ duration: 0.4 }}
@@ -588,7 +577,7 @@ export default function HomeopathicLayout() {
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.3 }}
-                  className="text-4xl md:text-6xl font-bold mb-6"
+                  className="text-4xl md:text-2xl  mb-6"
                 >
                   {banners[currentBanner].text}
                 </motion.h1>
@@ -612,28 +601,39 @@ export default function HomeopathicLayout() {
 
       {/* Brands Section */}
       <section className="py-16 w-full bg-gray-50">
-      <motion.h2
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        viewport={{ once: true }}
-        className="text-3xl md:text-4xl font-bold text-gray-900 text-center mb-8"
-      >
-        Popular Brands
-      </motion.h2>
+  <motion.h2
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.6 }}
+    viewport={{ once: true }}
+    className="text-3xl md:text-4xl font-bold text-gray-900 text-center mb-8"
+  >
+    Popular Brands
+  </motion.h2>
 
-      {loading ? (
-        <div className="text-center text-gray-500">Loading brands...</div>
-      ) : error ? (
-        <div className="text-center text-red-500">{error}</div>
-      ) : (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 px-4">
-          {brands.map((brand, index) => (
-            <BrandCard key={brand.id} brand={brand} index={index} />
-          ))}
+  {loading ? (
+    <div className="text-center text-gray-500">Loading brands...</div>
+  ) : error ? (
+    <div className="text-center text-red-500">{error}</div>
+  ) : (
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 px-4">
+      {brands.map((brand, index) => (
+        <div
+          key={brand.id}
+          className="
+            p-3 rounded-xl bg-white 
+            border border-green-200
+            shadow-[0_0_12px_rgba(0,255,120,0.8),_0_0_20px_rgba(0,255,120,0.4)]
+            transition-all duration-300
+          "
+        >
+          <BrandCard brand={brand} index={index} />
         </div>
-      )}
-    </section>
+      ))}
+    </div>
+  )}
+</section>
+
 
        {/* CATEGORIES GRID - Edge to Edge */}
    
@@ -659,7 +659,7 @@ export default function HomeopathicLayout() {
       >
         <Button
           onClick={() => navigate("/shop/listing")}
-          className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg"
+          className="px-8 py-3 bg-green-600 hover:bg-green-800 text-white font-semibold rounded-lg"
         >
           View All Products
         </Button>
@@ -732,13 +732,13 @@ export default function HomeopathicLayout() {
           >
             <Button
               onClick={() => navigate("/shop/listing")}
-              className="px-8 py-4 bg-green-600 hover:bg-blue-700 text-white font-semibold rounded-lg text-lg"
+              className="px-8 py-4 bg-green-600 hover:bg-green-800 text-white font-semibold rounded-lg text-lg"
             >
               Shop All Products
             </Button>
             <Button
               variant="outline"
-              className="px-8 py-4 border-2 border-green-600 text-blue-600 hover:bg-blue-50 font-semibold rounded-lg text-lg"
+              className="px-8 py-4 border-2 border-green-600 text-green-600 hover:bg-green-70 font-semibold rounded-lg text-lg"
             >
               Book Consultation
             </Button>

@@ -103,18 +103,24 @@ px-4 py-3
           {/* Left side - Brand name and icons pushed to absolute left */}
           <div className="flex items-center gap-4 flex-1">
             {/* Brand Name */}
-            <motion.div 
-              className="flex items-center"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <h1 
-                className="text-6xl font-bold italic text-white cursor-pointer -mt-5"
-                onClick={() => navigate("/shop/home")}
-              >
-                Homeonext
-              </h1>
-            </motion.div>
+            
+
+            <motion.div
+  className="flex items-center"
+  whileHover={{ scale: 1.05 }}
+  whileTap={{ scale: 0.95 }}
+  onClick={() => navigate("/shop/home")}
+>
+  <h1
+    className="
+      text-4xl font-bold italic text-white -mt-5
+      drop-shadow-[0_0_10px_rgba(255,255,255,0.35)]
+    "
+  >
+    Homeonext
+  </h1>
+</motion.div>
+
 
             {/* Left side icons */}
             <div className="flex items-center gap-2">

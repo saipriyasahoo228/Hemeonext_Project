@@ -181,7 +181,7 @@ const ProductCard = ({ product, handleAddtoCart }) => {
           <Button
             onClick={handleBuyNow}
             disabled={product.stock === 0}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 text-sm transition-all duration-200"
+            className="w-full bg-green-600 hover:bg-green-800 text-white font-medium py-2 text-sm transition-all duration-200"
           >
             <ShoppingBag className="w-4 h-4 mr-1" />
             Buy Now
