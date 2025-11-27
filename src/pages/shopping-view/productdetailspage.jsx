@@ -201,7 +201,7 @@ export default function ProductDetail() {
       setImagePreviews([]);
       toast({
         title: "Review Submitted",
-        className: "bg-gradient-to-r from-[#C9F0DD] to-[#FFD6E8] text-[#2D5016] border-none shadow-lg",
+        className: "bg-green-500 text-white border-none shadow-lg",
       });
     } catch (err) {
       console.error("Review Submit Error:", err.response?.data);
@@ -261,7 +261,7 @@ export default function ProductDetail() {
       setImagePreviews(updatedReview.images.map((img) => img.image));
       toast({
         title: "Review Updated",
-        className: "bg-gradient-to-r from-[#C9F0DD] to-[#FFD6E8] text-[#2D5016] border-none shadow-lg",
+        className: "bg-green-500 text-white border-none shadow-lg",
       });
     } catch (err) {
       console.error("Review Update Error:", err);
@@ -291,7 +291,7 @@ export default function ProductDetail() {
       setEditingReview(false);
       toast({
         title: "Review Deleted",
-        className: "bg-gradient-to-r from-[#C9F0DD] to-[#FFD6E8] text-[#2D5016] border-none shadow-lg",
+        className: "bg-green-500 text-white border-none shadow-lg",
       });
     } catch (err) {
       console.error("Review Delete Error:", err);
@@ -351,13 +351,13 @@ export default function ProductDetail() {
           <Button
             variant="outline"
             size="sm"
-            className="mt-2 border-2 border-[#2D5016] bg-transparent shadow-md hover:bg-[#2D5016] hover:text-white"
+            className="mt-2 border-2 border-green-600 bg-transparent shadow-md hover:bg-green-600 hover:text-white"
             onClick={() => navigate("/shop/cart")}
           >
             Go to Cart
           </Button>
         ),
-        className: "bg-gradient-to-r from-[#C9F0DD] to-[#FFD6E8] text-[#2D5016] border-none",
+        className: "bg-green-500 text-white border-none",
         duration: 4000,
       });
     } catch (err) {
@@ -395,7 +395,7 @@ export default function ProductDetail() {
       setIsInWishlist(isProductInWishlist);
       toast({
         title: isProductInWishlist ? "Added to wishlist" : "Removed from wishlist",
-        className: "bg-gradient-to-r from-[#C9F0DD] to-[#FFD6E8] text-[#2D5016] border-none",
+        className: "bg-green-500 text-white border-none",
       });
     } catch (err) {
       console.error("Wishlist Toggle Error:", err);
@@ -465,7 +465,7 @@ export default function ProductDetail() {
           size="lg"
           onClick={handleAddToCart}
           disabled={cartLoading || cartQuantity >= product.stock || product.stock === 0}
-          className="gap-1 w-full pl-20 pr-20 border-2 border-[#2D5016] bg-gradient-to-r from-[#C9F0DD] via-[#FFD6E8] to-[#FFF2B2] hover:from-[#B0E8CD] hover:via-[#F5C2D9] hover:to-[#FFE999] text-[#2D5016] font-bold shadow-lg hover:shadow-xl transition-all duration-300"
+          className="flex-1 gap-1 md:pr-16 md:pl-16 p-3 border-2 border-green-600 bg-green-100 hover:bg-green-600 text-green-800 hover:text-white font-bold shadow-2xl hover:shadow-3xl transition-all duration-300"
         >
           {cartLoading ? (
             <Loader2 className="h-5 w-5 animate-spin" />
@@ -486,24 +486,24 @@ export default function ProductDetail() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#F0FFF8] via-[#FFF0F5] to-[#FFF9E6]">
-        <Loader2 className="h-8 w-8 animate-spin text-[#2D5016]" />
+      <div className="min-h-screen flex items-center justify-center bg-green-50">
+        <Loader2 className="h-8 w-8 animate-spin text-green-600" />
       </div>
     );
   }
 
   if (error || !product) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#F0FFF8] via-[#FFF0F5] to-[#FFF9E6]">
-        <p className="text-[#2D5016]">{error || "Product not found."}</p>
+      <div className="min-h-screen flex items-center justify-center bg-green-50">
+        <p className="text-green-800">{error || "Product not found."}</p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#F0FFF8] via-[#FFF0F5] to-[#FFF9E6]">
+    <div className="min-h-screen bg-green-50">
       <div className="flex flex-col md:flex-row">
-        {/* Main Image Card - Background Removed */}
+        {/* Main Image Card */}
         <div className="relative top-0 left-0 w-full md:w-1/2 h-auto md:h-auto flex flex-col items-center justify-center">
           <motion.div
             className="flex items-center justify-center mt-20 w-full h-[50vh] md:h-[70vh] cursor-zoom-in"
@@ -526,7 +526,7 @@ export default function ProductDetail() {
                 src={img}
                 alt={`Thumbnail ${index + 1}`}
                 className={`w-16 h-16 object-cover border-2 rounded-md cursor-pointer transition-all duration-300 ${
-                  currentImage === index ? "border-[#FF6B9D] shadow-lg" : "border-transparent hover:border-[#C9F0DD]"
+                  currentImage === index ? "border-orange-500 shadow-lg" : "border-transparent hover:border-green-300"
                 }`}
                 onClick={() => setCurrentImage(index)}
               />
@@ -536,17 +536,17 @@ export default function ProductDetail() {
             <>
               <button
                 onClick={prevImage}
-                className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 backdrop-blur-md flex items-center justify-center shadow-2xl hover:shadow-3xl transition-all duration-300 border-2 border-[#C9F0DD] hover:bg-[#C9F0DD]"
+                className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 backdrop-blur-md flex items-center justify-center shadow-2xl hover:shadow-3xl transition-all duration-300 border-2 border-green-300 hover:bg-green-300"
                 aria-label="Previous image"
               >
-                <ChevronLeft className="h-6 w-6 text-[#2D5016]" />
+                <ChevronLeft className="h-6 w-6 text-green-800" />
               </button>
               <button
                 onClick={nextImage}
-                className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 backdrop-blur-md flex items-center justify-center shadow-2xl hover:shadow-3xl transition-all duration-300 border-2 border-[#FFD6E8] hover:bg-[#FFD6E8]"
+                className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 backdrop-blur-md flex items-center justify-center shadow-2xl hover:shadow-3xl transition-all duration-300 border-2 border-green-300 hover:bg-green-300"
                 aria-label="Next image"
               >
-                <ChevronRight className="h-6 w-6 text-[#2D5016]" />
+                <ChevronRight className="h-6 w-6 text-green-800" />
               </button>
             </>
           )}
@@ -554,7 +554,7 @@ export default function ProductDetail() {
 
         <div className="w-full md:w-1/2 ml-auto p-6 lg:p-12">
           <div className="sticky top-0 pt-8 pb-6 bg-transparent z-10">
-            <h1 className="text-3xl lg:text-3xl font-bold tracking-tight text-[#2D5016]">
+            <h1 className="text-3xl lg:text-3xl font-bold tracking-tight text-green-800">
               {product.title}
             </h1>
             <div className="mt-2 flex items-center gap-4">
@@ -564,13 +564,13 @@ export default function ProductDetail() {
                     key={i}
                     className={`w-4 h-4 ${
                       i < Math.floor(product.average_rating || 0)
-                        ? "text-[#FFD666] fill-current"
+                        ? "text-orange-500 fill-current"
                         : "text-gray-300"
                     }`}
                   />
                 ))}
               </div>
-              <span className="text-sm text-[#5A7D3E]">
+              <span className="text-sm text-green-600">
                 {product.average_rating} ({product.review_count} reviews)
               </span>
               <span
@@ -586,7 +586,7 @@ export default function ProductDetail() {
               </span>
             </div>
             <div className="flex items-center gap-4 mt-4">
-              <div className="text-2xl font-bold text-[#2D5016] bg-gradient-to-r from-[#C9F0DD] to-[#FFD6E8] px-4 py-2 rounded-2xl shadow-lg">
+              <div className="text-2xl font-bold text-green-800 bg-green-100 px-4 py-2 rounded-2xl shadow-lg border border-green-300">
                 {salePrice || actualPrice}
               </div>
               {salePrice && discountPercentage > 0 && (
@@ -594,7 +594,7 @@ export default function ProductDetail() {
                   <span className="text-lg text-gray-500 line-through">
                     {actualPrice}
                   </span>
-                  <span className="text-sm font-medium text-white bg-gradient-to-r from-[#FF6B9D] to-[#FF8E53] px-3 py-1 rounded-full shadow-lg">
+                  <span className="text-sm font-medium text-white bg-orange-500 px-3 py-1 rounded-full shadow-lg">
                     {`${discountPercentage}% Off`}
                   </span>
                 </>
@@ -602,7 +602,7 @@ export default function ProductDetail() {
             </div>
             {product.colors?.length > 0 && (
               <div className="mt-4">
-                <p className="font-semibold text-[#2D5016]">
+                <p className="font-semibold text-green-800">
                   <strong>Color:</strong>
                 </p>
                 <div className="flex gap-2">
@@ -614,8 +614,8 @@ export default function ProductDetail() {
                       disabled={cartLoading}
                       className={`text-sm transition-all duration-300 ${
                         selectedColor === color
-                          ? "bg-gradient-to-r from-[#C9F0DD] to-[#FFD6E8] text-[#2D5016] border-2 border-[#2D5016] shadow-lg"
-                          : "bg-white text-[#2D5016] border-2 border-[#C9F0DD] hover:bg-[#C9F0DD]/20"
+                          ? "bg-green-600 text-white border-2 border-green-600 shadow-lg"
+                          : "bg-white text-green-800 border-2 border-green-300 hover:bg-green-100"
                       }`}
                     >
                       {color}
@@ -626,7 +626,7 @@ export default function ProductDetail() {
             )}
             {product.sizes?.length > 0 && (
               <div className="mt-4">
-                <p className="font-semibold text-[#2D5016]">
+                <p className="font-semibold text-green-800">
                   <strong>Size:</strong>
                 </p>
                 <div className="flex gap-2">
@@ -638,8 +638,8 @@ export default function ProductDetail() {
                       disabled={cartLoading}
                       className={`text-sm transition-all duration-300 ${
                         selectedSize === size
-                          ? "bg-gradient-to-r from-[#C9F0DD] to-[#FFD6E8] text-[#2D5016] border-2 border-[#2D5016] shadow-lg"
-                          : "bg-white text-[#2D5016] border-2 border-[#C9F0DD] hover:bg-[#C9F0DD]/20"
+                          ? "bg-green-600 text-white border-2 border-green-600 shadow-lg"
+                          : "bg-white text-green-800 border-2 border-green-300 hover:bg-green-100"
                       }`}
                     >
                       {size}
@@ -655,10 +655,10 @@ export default function ProductDetail() {
               <div className="relative bg-white border-2 border-white p-6 rounded-2xl max-w-4xl w-full shadow-2xl">
                 <button
                   onClick={() => setIsZoomed(false)}
-                  className="absolute top-4 right-4 p-2 rounded-full bg-gradient-to-r from-[#C9F0DD] to-[#FFD6E8] hover:from-[#B0E8CD] hover:to-[#F5C2D9] transition-all duration-300 shadow-lg"
+                  className="absolute top-4 right-4 p-2 rounded-full bg-green-500 hover:bg-green-600 transition-all duration-300 shadow-lg"
                   aria-label="Close zoom view"
                 >
-                  <X className="h-6 w-6 text-[#2D5016]" />
+                  <X className="h-6 w-6 text-white" />
                 </button>
                 <div className="flex items-center justify-center h-[70vh]">
                   <img
@@ -674,7 +674,7 @@ export default function ProductDetail() {
                       src={img}
                       alt={`Thumbnail ${index + 1}`}
                       className={`w-16 h-16 object-cover border-2 rounded-md cursor-pointer transition-all duration-300 ${
-                        currentImage === index ? "border-[#FF6B9D] shadow-lg" : "border-transparent hover:border-[#C9F0DD]"
+                        currentImage === index ? "border-orange-500 shadow-lg" : "border-transparent hover:border-green-300"
                       }`}
                       onClick={() => setCurrentImage(index)}
                     />
@@ -684,17 +684,17 @@ export default function ProductDetail() {
                   <>
                     <button
                       onClick={prevImage}
-                      className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 backdrop-blur-md flex items-center justify-center shadow-2xl hover:shadow-3xl transition-all duration-300 border-2 border-[#C9F0DD] hover:bg-[#C9F0DD]"
+                      className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 backdrop-blur-md flex items-center justify-center shadow-2xl hover:shadow-3xl transition-all duration-300 border-2 border-green-300 hover:bg-green-300"
                       aria-label="Previous image"
                     >
-                      <ChevronLeft className="h-6 w-6 text-[#2D5016]" />
+                      <ChevronLeft className="h-6 w-6 text-green-800" />
                     </button>
                     <button
                       onClick={nextImage}
-                      className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 backdrop-blur-md flex items-center justify-center shadow-2xl hover:shadow-3xl transition-all duration-300 border-2 border-[#FFD6E8] hover:bg-[#FFD6E8]"
+                      className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 backdrop-blur-md flex items-center justify-center shadow-2xl hover:shadow-3xl transition-all duration-300 border-2 border-green-300 hover:bg-green-300"
                       aria-label="Next image"
                     >
-                      <ChevronRight className="h-6 w-6 text-[#2D5016]" />
+                      <ChevronRight className="h-6 w-6 text-green-800" />
                     </button>
                   </>
                 )}
@@ -703,7 +703,7 @@ export default function ProductDetail() {
           )}
 
           <motion.p
-            className="mt-4 text-lg text-[#5A7D3E] bg-white/50 rounded-2xl p-4 shadow-lg border border-[#C9F0DD]/30"
+            className="mt-4 text-lg text-green-700 bg-green-100 rounded-2xl p-4 shadow-lg border border-green-200"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
@@ -714,18 +714,18 @@ export default function ProductDetail() {
           <motion.div className="flex flex-col sm:flex-row gap-4 mt-6">
             <Button
               size="lg"
-              className="flex-1 gap-1 md:pr-20 md:pl-20 p-4 border-2 border-[#2D5016] bg-gradient-to-r from-[#C9F0DD] via-[#FFD6E8] to-[#FFF2B2] hover:from-[#B0E8CD] hover:via-[#F5C2D9] hover:to-[#FFE999] text-[#2D5016] font-bold shadow-2xl hover:shadow-3xl transition-all duration-300"
+              className="flex-1 gap-1 md:pr-20 md:pl-20 p-4 border-2 border-green-600 bg-green-100 hover:bg-green-600 text-green-800 hover:text-white font-bold shadow-2xl hover:shadow-3xl transition-all duration-300"
               onClick={handleBuyNow}
               disabled={cartLoading || togglingWishlist || product.stock === 0}
             >
               <ShoppingBag className="h-5 w-5" /> Buy Now
             </Button>
             {renderCartButton()}
-            {/* Heart Icon - Background Removed */}
+            {/* Heart Icon */}
             <Button
               size="lg"
               variant="outline"
-              className="flex items-center justify-center gap-2 p-4 border-2 border-[#2D5016] bg-transparent hover:bg-transparent text-[#2D5016] font-bold shadow-lg hover:shadow-xl transition-all duration-300"
+              className="flex items-center justify-center gap-2 p-4 border-2 border-green-600 "
               onClick={handleToggleWishlist}
               disabled={togglingWishlist || cartLoading}
             >
@@ -734,8 +734,8 @@ export default function ProductDetail() {
               ) : (
                 <Heart
                   className={`h-5 w-5 transition-colors duration-200 
-                    ${isInWishlist ? "fill-[#FF6B9D]" : "fill-none"}`}
-                  color={isInWishlist ? "#FF6B9D" : "#2D5016"}
+                    ${isInWishlist ? "fill-orange-500" : "fill-none"}`}
+                  color={isInWishlist ? "#f53702ff" : "#166534"}
                   strokeWidth={1}
                 />
               )}
@@ -746,32 +746,32 @@ export default function ProductDetail() {
           </motion.div>
 
           <Tabs defaultValue="details" className="mt-6 mb-10 md:mb-0">
-            <TabsList className="w-full justify-start bg-gradient-to-r from-[#C9F0DD]/20 to-[#FFD6E8]/20 rounded-2xl p-2 shadow-lg border border-[#C9F0DD]/30 mb-2">
-              <TabsTrigger value="details" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#C9F0DD] data-[state=active]:to-[#FFD6E8] data-[state=active]:text-[#2D5016] rounded-xl font-medium transition-all duration-300">Details</TabsTrigger>
-              <TabsTrigger value="specifications" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#C9F0DD] data-[state=active]:to-[#FFD6E8] data-[state=active]:text-[#2D5016] rounded-xl font-medium transition-all duration-300">Specifications</TabsTrigger>
-              <TabsTrigger value="shipping" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#C9F0DD] data-[state=active]:to-[#FFD6E8] data-[state=active]:text-[#2D5016] rounded-xl font-medium transition-all duration-300">Shipping</TabsTrigger>
-              <TabsTrigger value="reviews" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#C9F0DD] data-[state=active]:to-[#FFD6E8] data-[state=active]:text-[#2D5016] rounded-xl font-medium transition-all duration-300">Reviews</TabsTrigger>
+            <TabsList className="w-full justify-start bg-green-100 rounded-2xl p-2 shadow-lg border border-green-200 mb-2">
+              <TabsTrigger value="details" className="data-[state=active]:bg-green-600 data-[state=active]:text-white rounded-xl font-medium transition-all duration-300">Details</TabsTrigger>
+              <TabsTrigger value="specifications" className="data-[state=active]:bg-green-600 data-[state=active]:text-white rounded-xl font-medium transition-all duration-300">Specifications</TabsTrigger>
+              <TabsTrigger value="shipping" className="data-[state=active]:bg-green-600 data-[state=active]:text-white rounded-xl font-medium transition-all duration-300">Shipping</TabsTrigger>
+              <TabsTrigger value="reviews" className="data-[state=active]:bg-green-600 data-[state=active]:text-white rounded-xl font-medium transition-all duration-300">Reviews</TabsTrigger>
             </TabsList>
             <TabsContent value="details">
               <motion.div
-                className="p-6 bg-gradient-to-br from-white to-[#F8FFFC] rounded-2xl shadow-2xl border-2 border-white"
+                className="p-6 bg-white rounded-2xl shadow-2xl border-2 border-green-100"
                 initial={{ opacity: 0, y: 20, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 transition={{ duration: 0.3, ease: "easeOut" }}
               >
-                <p className="text-[#2D5016]">
-                  <strong className="text-[#FF6B9D]">Brand:</strong> {product.brand?.name || "N/A"}
+                <p className="text-green-800">
+                  <strong className="text-orange-500">Brand:</strong> {product.brand?.name || "N/A"}
                 </p>
                 {product.material && (
-                  <p className="text-[#2D5016] mt-2">
-                    <strong className="text-[#FF6B9D]">Material:</strong> {product.material}
+                  <p className="text-green-800 mt-2">
+                    <strong className="text-orange-500">Material:</strong> {product.material}
                   </p>
                 )}
               </motion.div>
             </TabsContent>
             <TabsContent value="specifications">
               <motion.div
-                className="p-6 bg-gradient-to-br from-white to-[#F8FFFC] rounded-2xl shadow-2xl border-2 border-white"
+                className="p-6 bg-white rounded-2xl shadow-2xl border-2 border-green-100"
                 initial={{ opacity: 0, y: 20, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 transition={{ duration: 0.3, ease: "easeOut" }}
@@ -780,54 +780,54 @@ export default function ProductDetail() {
                   product.specifications.map((spec, index) => (
                     <div
                       key={index}
-                      className="p-4 m-2 rounded-2xl bg-gradient-to-r from-[#C9F0DD]/20 to-[#FFD6E8]/20 border border-[#C9F0DD]/30"
+                      className="p-4 m-2 rounded-2xl bg-green-50 border border-green-200"
                     >
-                      <p className="font-semibold text-[#2D5016]">
+                      <p className="font-semibold text-green-800">
                         {toTitleCase(spec.key)}:
                       </p>
-                      <p className="text-[#5A7D3E]">{toTitleCase(spec.value)}</p>
+                      <p className="text-green-700">{toTitleCase(spec.value)}</p>
                     </div>
                   ))
                 ) : (
-                  <p className="text-[#5A7D3E]">No specifications available.</p>
+                  <p className="text-green-700">No specifications available.</p>
                 )}
               </motion.div>
             </TabsContent>
             <TabsContent value="shipping">
               <motion.div
-                className="p-6 bg-gradient-to-br from-white to-[#F8FFFC] rounded-2xl shadow-2xl border-2 border-white"
+                className="p-6 bg-white rounded-2xl shadow-2xl border-2 border-green-100"
                 initial={{ opacity: 0, y: 20, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 transition={{ duration: 0.3, ease: "easeOut" }}
               >
-                <p className="text-[#2D5016]">{product.shipping_info || "Standard shipping applies."}</p>
-                <p className="text-[#2D5016] mt-2">{product.return_policy || "30-day return policy."}</p>
+                <p className="text-green-800">{product.shipping_info || "Standard shipping applies."}</p>
+                <p className="text-green-800 mt-2">{product.return_policy || "30-day return policy."}</p>
               </motion.div>
             </TabsContent>
 
             <TabsContent value="reviews">
               <motion.div
-                className="p-6 bg-gradient-to-br from-white to-[#F8FFFC] rounded-2xl shadow-2xl border-2 border-white"
+                className="p-6 bg-white rounded-2xl shadow-2xl border-2 border-green-100"
                 initial={{ opacity: 0, y: 20, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 transition={{ duration: 0.3, ease: "easeOut" }}
               >
-                <h3 className="text-xl font-semibold mb-4 text-[#2D5016]">
+                <h3 className="text-xl font-semibold mb-4 text-green-800">
                   Customer Reviews
                 </h3>
                 {user ? (
                   userReview ? (
                     <div className="mb-6">
-                      <h4 className="font-semibold text-lg mb-2 text-[#2D5016]">
+                      <h4 className="font-semibold text-lg mb-2 text-green-800">
                         Your Review
                       </h4>
                       {editingReview ? (
                         <form
                           onSubmit={handleReviewUpdate}
-                          className="border border-[#C9F0DD] p-4 rounded-2xl shadow-xl bg-white"
+                          className="border border-green-200 p-4 rounded-2xl shadow-xl bg-white"
                         >
                           <div className="flex items-center gap-2 mb-2">
-                            <Label className="font-medium text-[#2D5016]">
+                            <Label className="font-medium text-green-800">
                               Rating:
                             </Label>
                             <div className="flex">
@@ -836,7 +836,7 @@ export default function ProductDetail() {
                                   key={star}
                                   className={`w-6 h-6 cursor-pointer ${
                                     star <= newReview.rating
-                                      ? "text-[#FFD666] fill-current"
+                                      ? "text-orange-500 fill-current"
                                       : "text-gray-300"
                                   }`}
                                   onClick={() =>
@@ -858,17 +858,17 @@ export default function ProductDetail() {
                                 comment: e.target.value,
                               })
                             }
-                            className="mb-3 border-[#C9F0DD] focus:border-[#FF6B9D]"
+                            className="mb-3 border-green-200 focus:border-orange-500"
                           />
                           <div className="mb-3">
-                            <Label className="font-medium text-[#2D5016]">
+                            <Label className="font-medium text-green-800">
                               Upload Image:
                             </Label>
                             <input
                               type="file"
                               accept="image/*"
                               onChange={handleImageUpload}
-                              className="mt-1 block w-full text-sm text-[#5A7D3E] file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-gradient-to-r file:from-[#C9F0DD] file:to-[#FFD6E8] file:text-[#2D5016] hover:file:from-[#B0E8CD] hover:file:to-[#F5C2D9]"
+                              className="mt-1 block w-full text-sm text-green-700 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-500 file:text-white hover:file:bg-green-600"
                             />
                           </div>
                           {imagePreviews.length > 0 && (
@@ -878,7 +878,7 @@ export default function ProductDetail() {
                                   <img
                                     src={preview}
                                     alt={`Preview ${index}`}
-                                    className="w-20 h-20 object-cover rounded-md cursor-pointer border-2 border-[#C9F0DD]"
+                                    className="w-20 h-20 object-cover rounded-md cursor-pointer border-2 border-green-200"
                                     onClick={() =>
                                       setSelectedReviewImage(preview)
                                     }
@@ -886,7 +886,7 @@ export default function ProductDetail() {
                                   <button
                                     type="button"
                                     onClick={() => removeImage(index)}
-                                    className="absolute top-0 right-0 bg-[#FF6B9D] text-white rounded-full w-5 h-5 flex items-center justify-center hover:bg-[#FF8E53] transition-colors"
+                                    className="absolute top-0 right-0 bg-orange-500 text-white rounded-full w-5 h-5 flex items-center justify-center hover:bg-orange-600 transition-colors"
                                   >
                                     <X className="w-3 h-3" />
                                   </button>
@@ -898,7 +898,7 @@ export default function ProductDetail() {
                             <Button
                               type="submit"
                               disabled={submittingReview}
-                              className="bg-gradient-to-r from-[#C9F0DD] to-[#FFD6E8] hover:from-[#B0E8CD] hover:to-[#F5C2D9] text-[#2D5016] font-bold shadow-lg"
+                              className="bg-green-500 hover:bg-green-600 text-white font-bold shadow-lg"
                             >
                               {submittingReview ? (
                                 <Loader2 className="h-5 w-5 animate-spin" />
@@ -910,7 +910,7 @@ export default function ProductDetail() {
                               variant="destructive"
                               onClick={handleReviewDelete}
                               disabled={submittingReview}
-                              className="bg-gradient-to-r from-[#FF6B9D] to-[#FF8E53] hover:from-[#FF8E53] hover:to-[#FF6B9D] text-white font-bold shadow-lg"
+                              className="bg-orange-500 hover:bg-orange-600 text-white font-bold shadow-lg"
                             >
                               {submittingReview ? (
                                 <Loader2 className="h-5 w-5 animate-spin" />
@@ -922,16 +922,16 @@ export default function ProductDetail() {
                               variant="outline"
                               onClick={() => setEditingReview(false)}
                               disabled={submittingReview}
-                              className="border-[#C9F0DD] text-[#2D5016] hover:bg-[#C9F0DD]/20 font-bold"
+                              className="border-green-200 text-green-800 hover:bg-green-100 font-bold"
                             >
                               Cancel
                             </Button>
                           </div>
                         </form>
                       ) : (
-                        <div className="border border-[#C9F0DD] p-4 rounded-2xl shadow-xl bg-white flex justify-between items-start">
+                        <div className="border border-green-200 p-4 rounded-2xl shadow-xl bg-white flex justify-between items-start">
                           <div>
-                            <p className="font-semibold text-[#2D5016]">
+                            <p className="font-semibold text-green-800">
                               {userReview.customer_name}
                             </p>
                             <div className="flex">
@@ -940,13 +940,13 @@ export default function ProductDetail() {
                                   key={star}
                                   className={`w-4 h-4 ${
                                     star <= userReview.rating
-                                      ? "text-[#FFD666]"
+                                      ? "text-orange-500"
                                       : "text-gray-300"
                                   }`}
                                 />
                               ))}
                             </div>
-                            <p className="text-[#5A7D3E]">
+                            <p className="text-green-700">
                               {userReview.comment || "No comment provided."}
                             </p>
                             {userReview.images && userReview.images.length > 0 && (
@@ -956,7 +956,7 @@ export default function ProductDetail() {
                                     key={index}
                                     src={img.image}
                                     alt={`Review image ${index}`}
-                                    className="w-20 h-20 object-cover rounded-md cursor-pointer border-2 border-[#C9F0DD]"
+                                    className="w-20 h-20 object-cover rounded-md cursor-pointer border-2 border-green-200"
                                     onClick={() =>
                                       setSelectedReviewImage(img.image)
                                     }
@@ -964,14 +964,14 @@ export default function ProductDetail() {
                                 ))}
                               </div>
                             )}
-                            <p className="text-sm text-[#5A7D3E]">
+                            <p className="text-sm text-green-600">
                               {new Date(userReview.created_at).toLocaleDateString()}
                             </p>
                           </div>
                           <Button
                             variant="outline"
                             onClick={() => setEditingReview(true)}
-                            className="ml-4 border-[#C9F0DD] text-[#2D5016] hover:bg-[#C9F0DD] hover:text-[#2D5016] transition-colors font-bold"
+                            className="ml-4 border-green-200 text-green-800 hover:bg-green-100 hover:text-green-800 transition-colors font-bold"
                           >
                             Edit
                           </Button>
@@ -981,17 +981,17 @@ export default function ProductDetail() {
                   ) : (
                     <form
                       onSubmit={handleReviewSubmit}
-                      className="mb-6 border border-[#C9F0DD] p-4 rounded-2xl bg-white shadow-lg"
+                      className="mb-6 border border-green-200 p-4 rounded-2xl bg-white shadow-lg"
                     >
                       <div className="flex items-center gap-2 mb-2">
-                        <Label className="font-medium text-[#2D5016]">Rating:</Label>
+                        <Label className="font-medium text-green-800">Rating:</Label>
                         <div className="flex">
                           {[1, 2, 3, 4, 5].map((star) => (
                             <Star
                               key={star}
                               className={`w-6 h-6 cursor-pointer ${
                                 star <= newReview.rating
-                                  ? "text-[#FFD666] fill-current"
+                                  ? "text-orange-500 fill-current"
                                   : "text-gray-300"
                               }`}
                               onClick={() =>
@@ -1007,17 +1007,17 @@ export default function ProductDetail() {
                         onChange={(e) =>
                           setNewReview({ ...newReview, comment: e.target.value })
                         }
-                        className="mb-3 border-[#C9F0DD] focus:border-[#FF6B9D]"
+                        className="mb-3 border-green-200 focus:border-orange-500"
                       />
                       <div className="mb-3">
-                        <Label className="font-medium text-[#2D5016]">
+                        <Label className="font-medium text-green-800">
                           Upload Image:
                         </Label>
                         <input
                           type="file"
                           accept="image/*"
                           onChange={handleImageUpload}
-                          className="mt-1 block w-full text-sm text-[#5A7D3E] file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-gradient-to-r file:from-[#C9F0DD] file:to-[#FFD6E8] file:text-[#2D5016] hover:file:from-[#B0E8CD] hover:file:to-[#F5C2D9]"
+                          className="mt-1 block w-full text-sm text-green-700 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-500 file:text-white hover:file:bg-green-600"
                         />
                       </div>
                       {imagePreviews.length > 0 && (
@@ -1027,13 +1027,13 @@ export default function ProductDetail() {
                               <img
                                 src={preview}
                                 alt={`Preview ${index}`}
-                                className="w-20 h-20 object-cover rounded-md cursor-pointer border-2 border-[#C9F0DD]"
+                                className="w-20 h-20 object-cover rounded-md cursor-pointer border-2 border-green-200"
                                 onClick={() => setSelectedReviewImage(preview)}
                               />
                               <button
                                 type="button"
                                 onClick={() => removeImage(index)}
-                                className="absolute top-0 right-0 bg-[#FF6B9D] text-white rounded-full w-5 h-5 flex items-center justify-center hover:bg-[#FF8E53] transition-colors"
+                                className="absolute top-0 right-0 bg-orange-500 text-white rounded-full w-5 h-5 flex items-center justify-center hover:bg-orange-600 transition-colors"
                               >
                                 <X className="w-3 h-3" />
                               </button>
@@ -1044,7 +1044,7 @@ export default function ProductDetail() {
                       <Button
                         type="submit"
                         disabled={submittingReview}
-                        className="bg-gradient-to-r from-[#C9F0DD] to-[#FFD6E8] hover:from-[#B0E8CD] hover:to-[#F5C2D9] text-[#2D5016] font-bold shadow-lg"
+                        className="bg-green-500 hover:bg-green-600 text-white font-bold shadow-lg"
                       >
                         {submittingReview ? (
                           <Loader2 className="h-5 w-5 animate-spin" />
@@ -1055,7 +1055,7 @@ export default function ProductDetail() {
                     </form>
                   )
                 ) : (
-                  <p className="mb-6 text-[#5A7D3E]">
+                  <p className="mb-6 text-green-700">
                     Please log in to submit a review.
                   </p>
                 )}
@@ -1065,9 +1065,9 @@ export default function ProductDetail() {
                     reviews.map((review) => (
                       <div
                         key={review.id}
-                        className="p-4 rounded-2xl bg-gradient-to-r from-[#C9F0DD]/20 to-[#FFD6E8]/20 shadow-lg border border-[#C9F0DD]/30"
+                        className="p-4 rounded-2xl bg-green-50 shadow-lg border border-green-200"
                       >
-                        <p className="font-semibold text-[#2D5016]">
+                        <p className="font-semibold text-green-800">
                           {review.customer_name}
                         </p>
                         <div className="flex">
@@ -1076,13 +1076,13 @@ export default function ProductDetail() {
                               key={star}
                               className={`w-4 h-4 ${
                                 star <= review.rating
-                                  ? "text-[#FFD666]"
+                                  ? "text-orange-500"
                                   : "text-gray-300"
                               }`}
                             />
                           ))}
                         </div>
-                        <p className="text-[#5A7D3E]">
+                        <p className="text-green-700">
                           {review.comment || "No comment provided."}
                         </p>
                         {review.images && review.images.length > 0 && (
@@ -1092,19 +1092,19 @@ export default function ProductDetail() {
                                 key={index}
                                 src={img.image}
                                 alt={`Review image ${index}`}
-                                className="w-20 h-20 object-cover rounded-md cursor-pointer border-2 border-[#C9F0DD]"
+                                className="w-20 h-20 object-cover rounded-md cursor-pointer border-2 border-green-200"
                                 onClick={() => setSelectedReviewImage(img.image)}
                               />
                             ))}
                           </div>
                         )}
-                        <p className="text-sm text-[#5A7D3E]">
+                        <p className="text-sm text-green-600">
                           {new Date(review.created_at).toLocaleDateString()}
                         </p>
                       </div>
                     ))
                   ) : (
-                    <p className="text-[#5A7D3E]">
+                    <p className="text-green-700">
                       No reviews yet. Be the first to review this product!
                     </p>
                   )}
@@ -1115,10 +1115,10 @@ export default function ProductDetail() {
                     <div className="relative bg-white border-2 border-white p-6 rounded-2xl max-w-4xl w-full shadow-2xl">
                       <button
                         onClick={() => setSelectedReviewImage(null)}
-                        className="absolute top-4 right-4 p-2 rounded-full bg-gradient-to-r from-[#C9F0DD] to-[#FFD6E8] hover:from-[#B0E8CD] hover:to-[#F5C2D9] transition-all duration-300 shadow-lg"
+                        className="absolute top-4 right-4 p-2 rounded-full bg-green-500 hover:bg-green-600 transition-all duration-300 shadow-lg"
                         aria-label="Close image view"
                       >
-                        <X className="h-6 w-6 text-[#2D5016]" />
+                        <X className="h-6 w-6 text-white" />
                       </button>
                       <div className="flex items-center justify-center h-[70vh]">
                         <img
@@ -1147,21 +1147,21 @@ export default function ProductDetail() {
             onClick={() => setShowAuthPopup(false)}
           >
             <motion.div
-              className="bg-gradient-to-br from-[#F0FFF8] to-[#FFF0F5] rounded-2xl p-6 shadow-2xl border-2 border-[#C9F0DD] max-w-sm w-full mx-4"
+              className="bg-green-50 rounded-2xl p-6 shadow-2xl border-2 border-green-200 max-w-sm w-full mx-4"
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
             >
-              <h3 className="text-lg font-bold text-[#2D5016] mb-4">
+              <h3 className="text-lg font-bold text-green-800 mb-4">
                 Please Log In or Register
               </h3>
-              <p className="text-sm text-[#5A7D3E] mb-6">
+              <p className="text-sm text-green-700 mb-6">
                 You need to be logged in to access this feature.
               </p>
               <div className="flex gap-4">
                 <Button
-                  className="w-full bg-gradient-to-r from-[#C9F0DD] to-[#FFD6E8] hover:from-[#B0E8CD] hover:to-[#F5C2D9] text-[#2D5016] font-bold shadow-lg"
+                  className="w-full bg-green-500 hover:bg-green-600 text-white font-bold shadow-lg"
                   onClick={() => {
                     setShowAuthPopup(false);
                     navigate("/auth/login");
@@ -1170,7 +1170,7 @@ export default function ProductDetail() {
                   Login
                 </Button>
                 <Button
-                  className="w-full bg-gradient-to-r from-[#FFF2B2] to-[#FFD6E8] hover:from-[#FFE999] hover:to-[#F5C2D9] text-[#2D5016] font-bold shadow-lg"
+                  className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold shadow-lg"
                   onClick={() => {
                     setShowAuthPopup(false);
                     navigate("/auth/register");

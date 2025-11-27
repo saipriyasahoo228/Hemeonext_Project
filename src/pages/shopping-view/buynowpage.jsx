@@ -825,17 +825,35 @@
 
 
 
-
-
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { AlertCircle, CheckCircle2, MapPin, Plus, ShoppingCart, Minus, PlusCircle, X, Pencil, Loader2 } from "lucide-react";
+import { 
+  AlertCircle, 
+  CheckCircle2, 
+  MapPin, 
+  Plus, 
+  ShoppingCart, 
+  Minus, 
+  PlusCircle, 
+  X, 
+  Pencil, 
+  Loader2,
+  QrCode,
+  Shield,
+  Truck,
+  CreditCard,
+  Smartphone,
+  Clock,
+  Package
+} from "lucide-react";
 import { Button } from "../../components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "../../components/ui/card";
 import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../components/ui/select";
 import { Separator } from "../../components/ui/separator";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../components/ui/tabs";
+import { Badge } from "../../components/ui/badge";
 import { useCurrency } from "../../context/currency-context";
 import { useAuth } from "../../context/auth-context";
 import { useCountryCode } from "../../hooks/useCountryCode";
@@ -874,7 +892,7 @@ const refreshShiprocketToken = async () => {
   }
 };
 
-const fetchShippingRates = async (pincode, weight, orderValue, retry=false) => {
+const fetchShippingRates = async (pincode, weight, orderValue, retry = false) => {
   try {
     const params = new URLSearchParams({
       pickup_postcode: import.meta.env.VITE_PICKUP_PINCODE,
@@ -882,6 +900,7 @@ const fetchShippingRates = async (pincode, weight, orderValue, retry=false) => {
       weight: weight.toString(),
       cod: "0",
     });
+
     const token = getShiprocketToken();
     const response = await fetch(`https://apiv2.shiprocket.in/v1/external/courier/serviceability/?${params}`, {
       method: "GET",
@@ -897,10 +916,9 @@ const fetchShippingRates = async (pincode, weight, orderValue, retry=false) => {
         return fetchShippingRates(pincode, weight, orderValue, true);
       }
     }
+
     if (!response.ok) {
       console.error(`Shiprocket API error: ${response.status} ${response.statusText}`);
-      const errorData = await response.json().catch(() => ({}));
-      console.error("Error details:", errorData);
       return [];
     }
 
@@ -912,7 +930,7 @@ const fetchShippingRates = async (pincode, weight, orderValue, retry=false) => {
   }
 };
 
-// Address Component for adding/editing shipping addresses
+// Enhanced Address Component with professional styling
 const AddressComponent = ({ onSave, initialData, onCancel }) => {
   const { countries } = useCountryCode();
   const [address, setAddress] = useState({
@@ -967,129 +985,180 @@ const AddressComponent = ({ onSave, initialData, onCancel }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div>
-        <Label htmlFor="address_type" className="text-[#2D5016] font-medium">Address Type</Label>
-        <Input
-          id="address_type"
-          value={address.address_type}
-          onChange={(e) => handleChange("address_type", e.target.value)}
-          placeholder="e.g., Home, Work, Other"
-          className={`border-[#C9F0DD] focus:border-[#FF6B9D] ${errors.address_type ? "border-red-500" : ""}`}
-        />
-        {errors.address_type && <p className="text-red-500 text-xs mt-1">{errors.address_type}</p>}
+    <form onSubmit={handleSubmit} className="space-y-4 p-4 bg-white dark:bg-gray-800 rounded-lg border border-green-100 dark:border-green-900">
+      <div className="flex items-center gap-2 mb-4">
+        <MapPin className="h-5 w-5 text-green-600" />
+        <h3 className="font-semibold text-gray-900 dark:text-white">Add New Address</h3>
       </div>
-      <div>
-        <Label htmlFor="full_name" className="text-[#2D5016] font-medium">Full Name<span className="text-red-500">*</span></Label>
-        <Input
-          id="full_name"
-          value={address.full_name}
-          onChange={(e) => handleChange("full_name", e.target.value)}
-          className={`border-[#C9F0DD] focus:border-[#FF6B9D] ${errors.full_name ? "border-red-500" : ""}`}
-        />
-        {errors.full_name && <p className="text-red-500 text-xs mt-1">{errors.full_name}</p>}
-      </div>
-      <div>
-        <Label htmlFor="mobile_number" className="text-[#2D5016] font-medium">Mobile Number<span className="text-red-500">*</span></Label>
-        <div className="flex">
-          <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-[#C9F0DD] bg-[#C9F0DD]/20 text-[#2D5016] text-sm">
-            {getPhonePrefix(address.country)}
-          </span>
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <Label htmlFor="address_type" className="text-gray-700 dark:text-gray-300">Address Type</Label>
           <Input
-            id="mobile_number"
-            value={address.mobile_number}
-            onChange={(e) => {
-              const value = e.target.value.replace(/\D/g, "");
-              if (value.length <= 13) handleChange("mobile_number", value);
-            }}
-            className={`rounded-l-none border-[#C9F0DD] focus:border-[#FF6B9D] ${errors.mobile_number ? "border-red-500" : ""}`}
-            maxLength="13"
+            id="address_type"
+            value={address.address_type}
+            onChange={(e) => handleChange("address_type", e.target.value)}
+            placeholder="e.g., Home, Work, Other"
+            className={errors.address_type ? "border-red-500" : ""}
+          />
+          {errors.address_type && <p className="text-red-500 text-xs mt-1">{errors.address_type}</p>}
+        </div>
+
+        <div>
+          <Label htmlFor="full_name" className="text-gray-700 dark:text-gray-300">Full Name<span className="text-red-500">*</span></Label>
+          <Input
+            id="full_name"
+            value={address.full_name}
+            onChange={(e) => handleChange("full_name", e.target.value)}
+            className={errors.full_name ? "border-red-500" : ""}
+          />
+          {errors.full_name && <p className="text-red-500 text-xs mt-1">{errors.full_name}</p>}
+        </div>
+
+        <div className="md:col-span-2">
+          <Label htmlFor="mobile_number" className="text-gray-700 dark:text-gray-300">Mobile Number<span className="text-red-500">*</span></Label>
+          <div className="flex">
+            <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300">
+              {getPhonePrefix(address.country)}
+            </span>
+            <Input
+              id="mobile_number"
+              value={address.mobile_number}
+              onChange={(e) => {
+                const value = e.target.value.replace(/\D/g, "");
+                if (value.length <= 13) handleChange("mobile_number", value);
+              }}
+              className={`rounded-l-none ${errors.mobile_number ? "border-red-500" : ""}`}
+              maxLength="13"
+            />
+          </div>
+          {errors.mobile_number && <p className="text-red-500 text-xs mt-1">{errors.mobile_number}</p>}
+        </div>
+
+        <div>
+          <Label htmlFor="country" className="text-gray-700 dark:text-gray-300">Country<span className="text-red-500">*</span></Label>
+          <Select value={address.country} onValueChange={(value) => handleChange("country", value)}>
+            <SelectTrigger className={errors.country ? "border-red-500" : ""}>
+              <SelectValue placeholder="Select country" />
+            </SelectTrigger>
+            <SelectContent className="max-h-40">
+              {countries.map((country) => (
+                <SelectItem key={country.code} value={country.name}>{country.name}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          {errors.country && <p className="text-red-500 text-xs mt-1">{errors.country}</p>}
+        </div>
+
+        <div>
+          <Label htmlFor="area_zip_code" className="text-gray-700 dark:text-gray-300">Zip Code<span className="text-red-500">*</span></Label>
+          <Input
+            id="area_zip_code"
+            value={address.area_zip_code}
+            onChange={(e) => handleChange("area_zip_code", e.target.value)}
+            className={errors.area_zip_code ? "border-red-500" : ""}
+          />
+          {errors.area_zip_code && <p className="text-red-500 text-xs mt-1">{errors.area_zip_code}</p>}
+        </div>
+
+        <div className="md:col-span-2">
+          <Label htmlFor="address_line_1" className="text-gray-700 dark:text-gray-300">Address Line 1<span className="text-red-500">*</span></Label>
+          <Input
+            id="address_line_1"
+            value={address.address_line_1}
+            onChange={(e) => handleChange("address_line_1", e.target.value)}
+            className={errors.address_line_1 ? "border-red-500" : ""}
+          />
+          {errors.address_line_1 && <p className="text-red-500 text-xs mt-1">{errors.address_line_1}</p>}
+        </div>
+
+        <div className="md:col-span-2">
+          <Label htmlFor="address_line_2" className="text-gray-700 dark:text-gray-300">Address Line 2 (Optional)</Label>
+          <Input
+            id="address_line_2"
+            value={address.address_line_2}
+            onChange={(e) => handleChange("address_line_2", e.target.value)}
           />
         </div>
-        {errors.mobile_number && <p className="text-red-500 text-xs mt-1">{errors.mobile_number}</p>}
+
+        <div>
+          <Label htmlFor="city" className="text-gray-700 dark:text-gray-300">City<span className="text-red-500">*</span></Label>
+          <Input
+            id="city"
+            value={address.city}
+            onChange={(e) => handleChange("city", e.target.value)}
+            className={errors.city ? "border-red-500" : ""}
+          />
+          {errors.city && <p className="text-red-500 text-xs mt-1">{errors.city}</p>}
+        </div>
+
+        <div>
+          <Label htmlFor="state" className="text-gray-700 dark:text-gray-300">State<span className="text-red-500">*</span></Label>
+          <Input
+            id="state"
+            value={address.state}
+            onChange={(e) => handleChange("state", e.target.value)}
+            className={errors.state ? "border-red-500" : ""}
+          />
+          {errors.state && <p className="text-red-500 text-xs mt-1">{errors.state}</p>}
+        </div>
       </div>
-      <div>
-        <Label htmlFor="country" className="text-[#2D5016] font-medium">Country<span className="text-red-500">*</span></Label>
-        <Select value={address.country} onValueChange={(value) => handleChange("country", value)}>
-          <SelectTrigger className={`border-[#C9F0DD] focus:border-[#FF6B9D] ${errors.country ? "border-red-500" : ""}`}>
-            <SelectValue placeholder="Select country" />
-          </SelectTrigger>
-          <SelectContent className="max-h-40 bg-gradient-to-b from-[#F0FFF8] to-[#FFF0F5] border-[#C9F0DD]">
-            {countries.map((country) => (
-              <SelectItem key={country.code} value={country.name} className="text-[#2D5016] hover:bg-[#C9F0DD]/20">
-                {country.name}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-        {errors.country && <p className="text-red-500 text-xs mt-1">{errors.country}</p>}
-      </div>
-      <div>
-        <Label htmlFor="address_line_1" className="text-[#2D5016] font-medium">Address Line 1<span className="text-red-500">*</span></Label>
-        <Input
-          id="address_line_1"
-          value={address.address_line_1}
-          onChange={(e) => handleChange("address_line_1", e.target.value)}
-          className={`border-[#C9F0DD] focus:border-[#FF6B9D] ${errors.address_line_1 ? "border-red-500" : ""}`}
-        />
-        {errors.address_line_1 && <p className="text-red-500 text-xs mt-1">{errors.address_line_1}</p>}
-      </div>
-      <div>
-        <Label htmlFor="address_line_2" className="text-[#2D5016] font-medium">Address Line 2 (Optional)</Label>
-        <Input
-          id="address_line_2"
-          value={address.address_line_2}
-          onChange={(e) => handleChange("address_line_2", e.target.value)}
-          className="border-[#C9F0DD] focus:border-[#FF6B9D]"
-        />
-      </div>
-      <div>
-        <Label htmlFor="city" className="text-[#2D5016] font-medium">City<span className="text-red-500">*</span></Label>
-        <Input
-          id="city"
-          value={address.city}
-          onChange={(e) => handleChange("city", e.target.value)}
-          className={`border-[#C9F0DD] focus:border-[#FF6B9D] ${errors.city ? "border-red-500" : ""}`}
-        />
-        {errors.city && <p className="text-red-500 text-xs mt-1">{errors.city}</p>}
-      </div>
-      <div>
-        <Label htmlFor="state" className="text-[#2D5016] font-medium">State<span className="text-red-500">*</span></Label>
-        <Input
-          id="state"
-          value={address.state}
-          onChange={(e) => handleChange("state", e.target.value)}
-          className={`border-[#C9F0DD] focus:border-[#FF6B9D] ${errors.state ? "border-red-500" : ""}`}
-        />
-        {errors.state && <p className="text-red-500 text-xs mt-1">{errors.state}</p>}
-      </div>
-      <div>
-        <Label htmlFor="area_zip_code" className="text-[#2D5016] font-medium">Zip Code<span className="text-red-500">*</span></Label>
-        <Input
-          id="area_zip_code"
-          value={address.area_zip_code}
-          onChange={(e) => handleChange("area_zip_code", e.target.value)}
-          className={`border-[#C9F0DD] focus:border-[#FF6B9D] ${errors.area_zip_code ? "border-red-500" : ""}`}
-        />
-        {errors.area_zip_code && <p className="text-red-500 text-xs mt-1">{errors.area_zip_code}</p>}
-      </div>
-      <div className="flex gap-2">
-        <Button 
-          type="submit" 
-          className="w-full bg-gradient-to-r from-[#C9F0DD] to-[#FFD6E8] hover:from-[#B0E8CD] hover:to-[#F5C2D9] text-[#2D5016] font-bold shadow-lg hover:shadow-xl transition-all duration-300"
-        >
-          Save Address
-        </Button>
-        <Button 
-          type="button" 
-          variant="outline" 
-          className="w-full border-[#C9F0DD] text-[#2D5016] hover:bg-[#C9F0DD]/20 font-bold"
-          onClick={onCancel}
-        >
-          Cancel
-        </Button>
+
+      <div className="flex gap-2 pt-4">
+        <Button type="submit" className="w-full bg-green-600 hover:bg-green-700">Save Address</Button>
+        <Button type="button" variant="outline" className="w-full" onClick={onCancel}>Cancel</Button>
       </div>
     </form>
+  );
+};
+
+// QR Scanner Component for Cash on Delivery
+const QRScannerModal = ({ isOpen, onClose, totalAmount }) => {
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 w-full max-w-md mx-4 shadow-2xl">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Scan to Pay</h3>
+          <Button variant="ghost" size="sm" onClick={onClose}>
+            <X className="h-4 w-4" />
+          </Button>
+        </div>
+
+        <div className="text-center space-y-4">
+          <div className="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg border-2 border-green-200 dark:border-green-800">
+            <div className="bg-white p-4 rounded border">
+              {/* Dummy QR Code */}
+              <div className="w-48 h-48 mx-auto bg-gradient-to-br from-green-400 to-green-600 rounded-lg flex items-center justify-center">
+                <div className="text-white text-center">
+                  <QrCode className="h-16 w-16 mx-auto mb-2" />
+                  <p className="text-xs font-medium">QR CODE</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <p className="text-sm text-gray-600 dark:text-gray-300">Scan this QR code with your UPI app</p>
+            <div className="bg-gray-50 dark:bg-gray-700 p-3 rounded-lg">
+              <p className="font-semibold text-green-600">{totalAmount}</p>
+              <p className="text-xs text-gray-500 dark:text-gray-400">Total Amount</p>
+            </div>
+          </div>
+
+          <div className="flex gap-2">
+            <Button className="flex-1 bg-green-600 hover:bg-green-700">
+              <Smartphone className="h-4 w-4 mr-2" />
+              Open UPI App
+            </Button>
+            <Button variant="outline" className="flex-1" onClick={onClose}>
+              Cancel
+            </Button>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 
@@ -1120,8 +1189,10 @@ export default function BuyNowPage() {
   const [selectedShippingRate, setSelectedShippingRate] = useState(null);
   const [isPincodeValid, setIsPincodeValid] = useState(true);
   const [pincodeError, setPincodeError] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState("online");
+  const [showQRScanner, setShowQRScanner] = useState(false);
   const { toast } = useToast();
-  
+
   const hasOverQuantityItems = isCartCheckout
     ? cart?.items?.some(item => item.quantity > item.product.stock)
     : quantity > (product?.stock || 0);
@@ -1221,25 +1292,6 @@ export default function BuyNowPage() {
     checkPincodeAvailability();
   }, [selectedAddressId, cart, product, quantity, totalPriceINR, addresses]);
 
-  if (authLoading || loading) return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#F0FFF8] via-[#FFF0F5] to-[#FFF9E6]">
-      <Loader2 className="h-8 w-8 animate-spin text-[#2D5016]" />
-    </div>
-  );
-  
-  if (!isAuthenticated) return null;
-  if (!isCartCheckout && !product) return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#F0FFF8] via-[#FFF0F5] to-[#FFF9E6]">
-      <p className="text-[#2D5016]">Product not found.</p>
-    </div>
-  );
-  
-  if (isCartCheckout && (!cart || !cart.items.length)) return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#F0FFF8] via-[#FFF0F5] to-[#FFF9E6]">
-      <p className="text-[#2D5016]">Cart is empty.</p>
-    </div>
-  );
-
   const handleQuantityChange = (change) => {
     if (!isCartCheckout) {
       const newQuantity = quantity + change;
@@ -1256,9 +1308,18 @@ export default function BuyNowPage() {
       setSelectedAddressId(addedAddress.id);
       setIsAddingAddress(false);
       setNewAddress(null);
+      toast({
+        title: "Success",
+        description: "Address added successfully",
+        variant: "default",
+      });
     } catch (error) {
       console.error("Failed to add address:", error);
-      alert("Failed to Add Address");
+      toast({
+        title: "Error",
+        description: "Failed to add address",
+        variant: "destructive",
+      });
     }
   };
 
@@ -1269,11 +1330,26 @@ export default function BuyNowPage() {
 
   const handleCheckout = async () => {
     if (!selectedAddressId) {
-      alert("Please Select or Add a Shipping Address.");
+      toast({
+        title: "Address Required",
+        description: "Please select or add a shipping address",
+        variant: "destructive",
+      });
       return;
     }
+
     if (!isPincodeValid || !selectedShippingRate) {
-      alert("Please select a valid shipping address with available delivery options.");
+      toast({
+        title: "Shipping Unavailable",
+        description: "Please select a valid shipping address with available delivery options",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (paymentMethod === "cod") {
+      // For Cash on Delivery, show QR scanner for online payment option
+      setShowQRScanner(true);
       return;
     }
 
@@ -1293,7 +1369,7 @@ export default function BuyNowPage() {
         currency: orderCurrency,
         shipping_address: selectedAddress,
         payment_method: "razorpay",
-        shipping_cost: orderCurrency === "INR" ? selectedShippingRate.freight_charge.toFixed(2): convertPrice(selectedShippingRate.freight_charge,true).toFixed(2),
+        shipping_cost: orderCurrency === "INR" ? selectedShippingRate.freight_charge.toFixed(2) : convertPrice(selectedShippingRate.freight_charge, true).toFixed(2),
         shipping_cost_inr: selectedShippingRate.freight_charge.toFixed(2),
         shipping_method: selectedShippingRate.courier_name,
         items: cart.items.map((item) => ({
@@ -1311,7 +1387,7 @@ export default function BuyNowPage() {
         currency: orderCurrency,
         shipping_address: selectedAddress,
         payment_method: "razorpay",
-        shipping_cost: orderCurrency === "INR" ? selectedShippingRate.freight_charge.toFixed(2) : convertPrice(selectedShippingRate.freight_charge,true).toFixed(2),
+        shipping_cost: orderCurrency === "INR" ? selectedShippingRate.freight_charge.toFixed(2) : convertPrice(selectedShippingRate.freight_charge, true).toFixed(2),
         shipping_cost_inr: selectedShippingRate.freight_charge.toFixed(2),
         shipping_method: selectedShippingRate.courier_name,
         items: [
@@ -1320,7 +1396,7 @@ export default function BuyNowPage() {
             quantity: quantity,
             price: orderCurrency === "INR"
               ? parseFloat(product.sale_price || product.actual_price).toFixed(2)
-              : convertPrice(parseFloat((product.sale_price || product.actual_price)),true).toFixed(2),
+              : convertPrice(parseFloat((product.sale_price || product.actual_price)), true).toFixed(2),
           },
         ],
       };
@@ -1349,6 +1425,11 @@ export default function BuyNowPage() {
             };
             await verifyPayment(paymentData);
             setPaymentStatus("success");
+            toast({
+              title: "Payment Successful",
+              description: "Your order has been placed successfully",
+              variant: "default",
+            });
           } catch (error) {
             console.error("Payment verification error:", error);
             setPaymentStatus("error");
@@ -1371,7 +1452,7 @@ export default function BuyNowPage() {
           name: selectedAddress.full_name,
           contact: selectedAddress.mobile_number.replace(/^\+\d{1,3}\s/, ""),
         },
-        theme: { color: "#C9F0DD" },
+        theme: { color: "#16A085" },
         notes: { address_id: selectedAddressId },
         modal: {
           ondismiss: () => {
@@ -1388,11 +1469,11 @@ export default function BuyNowPage() {
         console.error("Payment failed:", response.error);
         toast({
           title: "Payment Failed",
-          description: response.error || "Your payment could not be processed. Please try again or use a different payment method.",
+          description: response.error?.description || "Your payment could not be processed. Please try again.",
           variant: "destructive",
         });
       });
-      
+
       if (!window.Razorpay) {
         console.error("Razorpay script not loaded");
         toast({
@@ -1409,8 +1490,8 @@ export default function BuyNowPage() {
       setPaymentStatus("error");
       setIsCheckingOut(false);
       toast({
-        title: "Payment Could Not Be Initiated",
-        description: "There was a problem starting your payment. Please try again or contact support if the issue persists.",
+        title: "Payment Error",
+        description: "There was a problem starting your payment. Please try again.",
         variant: "destructive",
       });
     }
@@ -1429,110 +1510,166 @@ export default function BuyNowPage() {
       const updatedAddress = await updateAddress(user.customer_id, selectedAddressId, { mobile_number: updatedPhone });
       setAddresses(addresses.map((addr) => (addr.id === selectedAddressId ? updatedAddress : addr)));
       setIsEditingPhone(false);
+      toast({
+        title: "Success",
+        description: "Phone number updated successfully",
+        variant: "default",
+      });
     } catch (error) {
       console.error("Failed to update phone:", error);
-      alert("Failed to Update Phone Number");
+      toast({
+        title: "Error",
+        description: "Failed to update phone number",
+        variant: "destructive",
+      });
     }
   };
 
   const selectedAddress = addresses.find((addr) => addr.id === selectedAddressId);
 
+  if (authLoading || loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-green-50 to-white dark:from-gray-900 dark:to-gray-800 flex items-center justify-center">
+        <div className="text-center">
+          <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4 text-green-600" />
+          <p className="text-gray-600 dark:text-gray-300">Loading checkout...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) return null;
+  if (!isCartCheckout && !product) return <div className="text-center py-8">Product not found.</div>;
+  if (isCartCheckout && (!cart || !cart.items.length)) return <div className="text-center py-8">Cart is empty.</div>;
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#F0FFF8] via-[#FFF0F5] to-[#FFF9E6] py-8">
-      <div className="container mx-auto px-4 pt-20">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 to-white dark:from-gray-900 dark:to-gray-800">
+      <div className="container mx-auto px-4 pt-20 pb-8">
+        <QRScannerModal 
+          isOpen={showQRScanner} 
+          onClose={() => setShowQRScanner(false)} 
+          totalAmount={convertPrice(totalPriceINR)}
+        />
+
         {isCheckingOut && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-            <div className="bg-gradient-to-br from-white to-[#F8FFFC] rounded-2xl p-8 shadow-2xl border-2 border-white">
-              <Loader2 className="h-12 w-12 animate-spin text-[#2D5016] mx-auto mb-4" />
-              <p className="text-center text-[#2D5016] font-medium">Processing Payment...</p>
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-2xl text-center">
+              <Loader2 className="h-12 w-12 animate-spin mx-auto mb-4 text-green-600" />
+              <h3 className="text-xl font-semibold mb-2">Processing Payment</h3>
+              <p className="text-gray-600 dark:text-gray-300">Please wait while we process your payment...</p>
             </div>
           </div>
         )}
-        
+
         {paymentStatus === "success" ? (
-          <div className="text-center py-12">
-            <CheckCircle2 className="h-20 w-20 text-green-500 mx-auto mb-6" />
-            <h2 className="text-3xl font-bold text-[#2D5016] mb-4">Order Placed Successfully!</h2>
-            <p className="text-[#5A7D3E] text-lg mb-6">Order ID: {orderId}. Thank you for your purchase.</p>
-            <Button 
-              className="bg-gradient-to-r from-[#C9F0DD] to-[#FFD6E8] hover:from-[#B0E8CD] hover:to-[#F5C2D9] text-[#2D5016] font-bold shadow-lg hover:shadow-xl transition-all duration-300"
-              onClick={() => navigate("/shop/account?tab=orders")}
-            >
-              View Orders
-            </Button>
+          <div className="max-w-2xl mx-auto text-center py-16">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg border border-green-200 dark:border-green-800">
+              <CheckCircle2 className="h-20 w-20 text-green-500 mx-auto mb-6" />
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Order Placed Successfully!</h2>
+              <p className="text-gray-600 dark:text-gray-300 mb-2">Thank you for your purchase. Your order has been confirmed.</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">Order ID: {orderId}</p>
+              <div className="flex gap-4 justify-center">
+                <Button 
+                  onClick={() => navigate("/shop/account?tab=orders")}
+                  className="bg-green-600 hover:bg-green-700"
+                >
+                  View Orders
+                </Button>
+                <Button 
+                  variant="outline" 
+                  onClick={() => navigate("/shop")}
+                >
+                  Continue Shopping
+                </Button>
+              </div>
+            </div>
           </div>
         ) : (
-          <div className="grid gap-8 md:grid-cols-[2fr_1fr]">
-            {/* Left Column - Product and Address */}
-            <div className="space-y-6">
-              {/* Product/Cart Card */}
-              <Card className="bg-gradient-to-br from-white to-[#F8FFFC] rounded-2xl shadow-2xl border-2 border-white">
-                <CardHeader className="bg-gradient-to-r from-[#C9F0DD]/20 to-[#FFD6E8]/20 rounded-t-2xl">
-                  <CardTitle className="text-[#2D5016] text-xl font-bold">
+          <div className="grid gap-8 lg:grid-cols-3">
+            {/* Left Column - Product & Address */}
+            <div className="lg:col-span-2 space-y-6">
+              {/* Header */}
+              <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm border border-green-100 dark:border-green-900">
+                <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Checkout</h1>
+                <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
+                  <Shield className="h-4 w-4 text-green-600" />
+                  <span>Secure checkout with 256-bit SSL encryption</span>
+                </div>
+              </div>
+
+              {/* Product Details Card */}
+              <Card className="bg-white dark:bg-gray-800 shadow-sm border-green-100 dark:border-green-900">
+                <CardHeader className="bg-green-50 dark:bg-green-900/20 rounded-t-2xl">
+                  <CardTitle className="flex items-center gap-2 text-gray-900 dark:text-white">
+                    <Package className="h-5 w-5 text-green-600" />
                     {isCartCheckout ? "Cart Items" : "Product Details"}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="p-6">
                   {isCartCheckout ? (
-                    cart.items.map((item) => (
-                      <div key={item.id} className="flex items-center gap-4 py-4 border-b border-[#C9F0DD]/30 last:border-b-0">
-                        <img 
-                          src={item.product.images[0]?.image} 
-                          alt={item.product.title} 
-                          className="w-16 h-16 object-cover rounded-xl border-2 border-[#C9F0DD]"
-                        />
-                        <div className="flex-1">
-                          <h3 className="font-semibold text-[#2D5016]">{item.product.title}</h3>
-                          <p className="text-sm text-[#5A7D3E]">Quantity: {item.quantity}</p>
-                          {item.quantity > item.product.stock && (
-                            <p className="text-red-600 text-xs font-semibold mt-1">
-                              Selected quantity exceeds available stock ({item.product.stock}). Please remove this item and add it again with the correct quantity to proceed.
-                            </p>
-                          )}
+                    <div className="space-y-4">
+                      {cart.items.map((item) => (
+                        <div key={item.id} className="flex items-center gap-4 p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
+                          <img 
+                            src={item.product.images[0]?.image} 
+                            alt={item.product.title} 
+                            className="w-20 h-20 object-cover rounded-lg border border-gray-200 dark:border-gray-600"
+                          />
+                          <div className="flex-1 min-w-0">
+                            <h3 className="font-semibold text-gray-900 dark:text-white truncate">{item.product.title}</h3>
+                            <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">Quantity: {item.quantity}</p>
+                            {item.quantity > item.product.stock && (
+                              <Badge variant="destructive" className="mt-2">
+                                Exceeds stock ({item.product.stock})
+                              </Badge>
+                            )}
+                          </div>
+                          <p className="font-semibold text-green-600 text-lg">
+                            {convertPrice((item.product.sale_price || item.product.actual_price) * item.quantity)}
+                          </p>
                         </div>
-                        <p className="font-bold text-[#2D5016] text-lg">
-                          {convertPrice((item.product.sale_price || item.product.actual_price) * item.quantity)}
-                        </p>
-                      </div>
-                    ))
+                      ))}
+                    </div>
                   ) : (
-                    <div className="flex items-center gap-4 py-4">
+                    <div className="flex items-center gap-4 p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
                       <img 
                         src={product.images[0].image} 
                         alt={product.title} 
-                        className="w-16 h-16 object-cover rounded-xl border-2 border-[#C9F0DD]"
+                        className="w-20 h-20 object-cover rounded-lg border border-gray-200 dark:border-gray-600"
                       />
-                      <div className="flex-1">
-                        <h3 className="font-semibold text-[#2D5016] text-lg">{product.title}</h3>
+                      <div className="flex-1 min-w-0">
+                        <h3 className="font-semibold text-gray-900 dark:text-white truncate">{product.title}</h3>
                         <div className="flex items-center gap-3 mt-2">
-                          <Button 
-                            variant="outline" 
-                            size="icon" 
-                            onClick={() => handleQuantityChange(-1)} 
-                            disabled={quantity <= 1}
-                            className="border-2 border-[#C9F0DD] hover:bg-[#C9F0DD]/20 text-[#2D5016]"
-                          >
-                            <Minus className="h-4 w-4" />
-                          </Button>
-                          <span className="font-semibold text-[#2D5016] w-8 text-center">{quantity}</span>
-                          <Button 
-                            variant="outline" 
-                            size="icon" 
-                            onClick={() => handleQuantityChange(1)} 
-                            disabled={quantity >= product.stock}
-                            className="border-2 border-[#C9F0DD] hover:bg-[#C9F0DD]/20 text-[#2D5016]"
-                          >
-                            <PlusCircle className="h-4 w-4" />
-                          </Button>
-                          <span className="text-sm text-[#5A7D3E] ml-2">(Stock: {product.stock})</span>
+                          <div className="flex items-center gap-2 bg-white dark:bg-gray-600 rounded-lg px-3 py-1 border border-gray-200 dark:border-gray-500">
+                            <Button 
+                              variant="ghost" 
+                              size="icon" 
+                              onClick={() => handleQuantityChange(-1)} 
+                              disabled={quantity <= 1}
+                              className="h-6 w-6"
+                            >
+                              <Minus className="h-3 w-3" />
+                            </Button>
+                            <span className="font-medium w-8 text-center">{quantity}</span>
+                            <Button 
+                              variant="ghost" 
+                              size="icon" 
+                              onClick={() => handleQuantityChange(1)} 
+                              disabled={quantity >= product.stock}
+                              className="h-6 w-6"
+                            >
+                              <Plus className="h-3 w-3" />
+                            </Button>
+                          </div>
+                          <span className="text-sm text-gray-600 dark:text-gray-300">Stock: {product.stock}</span>
                         </div>
                         {quantity > product.stock && (
-                          <p className="text-red-600 text-xs font-semibold mt-2">
-                            Selected quantity exceeds available stock ({product.stock}). Please decrease the quantity to proceed.
-                          </p>
+                          <Badge variant="destructive" className="mt-2">
+                            Exceeds available stock
+                          </Badge>
                         )}
                       </div>
-                      <p className="font-bold text-[#2D5016] text-xl">
+                      <p className="font-semibold text-green-600 text-lg">
                         {convertPrice(totalPriceINR)}
                       </p>
                     </div>
@@ -1540,179 +1677,266 @@ export default function BuyNowPage() {
                 </CardContent>
               </Card>
 
-              {/* Address Card */}
-              <Card className="bg-gradient-to-br from-white to-[#F8FFFC] rounded-2xl shadow-2xl border-2 border-white">
-                <CardHeader className="bg-gradient-to-r from-[#C9F0DD]/20 to-[#FFD6E8]/20 rounded-t-2xl">
-                  <CardTitle className="text-[#2D5016] text-xl font-bold">Shipping Address</CardTitle>
+              {/* Shipping Address Card */}
+              <Card className="bg-white dark:bg-gray-800 shadow-sm border-green-100 dark:border-green-900">
+                <CardHeader className="bg-green-50 dark:bg-green-900/20 rounded-t-2xl">
+                  <CardTitle className="flex items-center gap-2 text-gray-900 dark:text-white">
+                    <MapPin className="h-5 w-5 text-green-600" />
+                    Shipping Address
+                  </CardTitle>
                 </CardHeader>
-                <CardContent className="p-6 space-y-4">
+                <CardContent className="p-6 space-y-6">
                   <Select value={selectedAddressId} onValueChange={setSelectedAddressId}>
-                    <SelectTrigger className="w-full border-2 border-[#C9F0DD] focus:border-[#FF6B9D]">
+                    <SelectTrigger className="w-full h-12">
                       <SelectValue placeholder="Select an address" />
                     </SelectTrigger>
-                    <SelectContent className="bg-gradient-to-b from-[#F0FFF8] to-[#FFF0F5] border-2 border-[#C9F0DD]">
+                    <SelectContent>
                       {addresses.map((addr) => (
-                        <SelectItem key={addr.id} value={addr.id} className="text-[#2D5016] hover:bg-[#C9F0DD]/20">
-                          {addr.address_line_1}, {addr.city}, {addr.state} {addr.area_zip_code}, {addr.country} ({addr.address_type})
+                        <SelectItem key={addr.id} value={addr.id}>
+                          <div className="flex items-center gap-2">
+                            <MapPin className="h-4 w-4 text-green-600" />
+                            <span>
+                              {addr.address_line_1}, {addr.city}, {addr.state} {addr.area_zip_code}
+                            </span>
+                            <Badge variant="outline" className="ml-2">{addr.address_type}</Badge>
+                          </div>
                         </SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
-                  
+
                   {selectedAddress && (
-                    <div className="bg-gradient-to-r from-[#C9F0DD]/20 to-[#FFD6E8]/20 rounded-2xl p-4 border border-[#C9F0DD]/30">
-                      <div className="text-[#2D5016] space-y-2">
-                        <p><strong>Name:</strong> {selectedAddress.full_name}</p>
-                        <div className="flex items-center gap-2">
-                          <p>
-                            <strong>Phone:</strong>{" "}
+                    <div className="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg border border-green-200 dark:border-green-800">
+                      <div className="flex items-start justify-between">
+                        <div className="space-y-2">
+                          <div className="flex items-center gap-2">
+                            <h4 className="font-semibold text-gray-900 dark:text-white">{selectedAddress.full_name}</h4>
+                            <Badge variant="secondary">{selectedAddress.address_type}</Badge>
+                          </div>
+                          <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
+                            <span>📱</span>
                             {isEditingPhone ? (
-                              <div className="flex gap-2 items-center">
+                              <div className="flex items-center gap-2">
                                 <div className="flex">
-                                  <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-[#C9F0DD] bg-[#C9F0DD]/20 text-[#2D5016] text-sm">
+                                  <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm dark:bg-gray-700 dark:border-gray-600">
                                     {getPhonePrefix(selectedAddress.country)}
                                   </span>
                                   <Input
                                     value={editedPhone}
                                     onChange={(e) => setEditedPhone(e.target.value)}
-                                    className="w-40 rounded-l-none border-[#C9F0DD]"
+                                    className="w-32 rounded-l-none h-8"
                                   />
                                 </div>
-                                <Button size="sm" onClick={handleSavePhone} className="bg-[#C9F0DD] text-[#2D5016] hover:bg-[#B0E8CD]">
-                                  Save
-                                </Button>
-                                <Button size="sm" variant="outline" onClick={() => setIsEditingPhone(false)} className="border-[#C9F0DD] text-[#2D5016]">
-                                  Cancel
-                                </Button>
+                                <Button size="sm" onClick={handleSavePhone} className="h-8">Save</Button>
+                                <Button size="sm" variant="outline" onClick={() => setIsEditingPhone(false)} className="h-8">Cancel</Button>
                               </div>
                             ) : (
                               <>
                                 {selectedAddress.mobile_number}
-                                <Button variant="ghost" size="sm" onClick={handleEditPhone} className="ml-2 text-[#2D5016] hover:bg-[#C9F0DD]/20">
-                                  <Pencil className="h-4 w-4" />
+                                <Button variant="ghost" size="sm" onClick={handleEditPhone} className="h-6 w-6 p-0">
+                                  <Pencil className="h-3 w-3" />
                                 </Button>
                               </>
                             )}
+                          </div>
+                          <p className="text-sm text-gray-600 dark:text-gray-300">
+                            {selectedAddress.address_line_1}
+                            {selectedAddress.address_line_2 && `, ${selectedAddress.address_line_2}`}
+                            <br />
+                            {selectedAddress.city}, {selectedAddress.state} {selectedAddress.area_zip_code}
+                            <br />
+                            {selectedAddress.country}
                           </p>
                         </div>
-                        <p><strong>Address:</strong> {selectedAddress.address_line_1}{selectedAddress.address_line_2 && `, ${selectedAddress.address_line_2}`}, {selectedAddress.city}, {selectedAddress.state} {selectedAddress.area_zip_code}, {selectedAddress.country}</p>
                       </div>
                     </div>
                   )}
-                  
+
                   <Button 
                     variant="outline" 
-                    className="w-full border-2 border-[#C9F0DD] text-[#2D5016] hover:bg-[#C9F0DD]/20 font-bold transition-all duration-300"
+                    className="w-full h-12 border-dashed border-green-300 dark:border-green-700 text-green-600 hover:bg-green-50 dark:hover:bg-green-900/20"
                     onClick={() => setIsAddingAddress(!isAddingAddress)}
                   >
-                    {isAddingAddress ? <X className="mr-2 h-4 w-4" /> : <Plus className="mr-2 h-4 w-4" />}
+                    {isAddingAddress ? (
+                      <X className="mr-2 h-4 w-4" />
+                    ) : (
+                      <Plus className="mr-2 h-4 w-4" />
+                    )}
                     {isAddingAddress ? "Cancel" : "Add New Address"}
                   </Button>
-                  
+
                   {isAddingAddress && (
-                    <div className="bg-gradient-to-r from-[#C9F0DD]/10 to-[#FFD6E8]/10 rounded-2xl p-4 border border-[#C9F0DD]/30">
-                      <AddressComponent
-                        onSave={handleAddAddress}
-                        initialData={newAddress}
-                        onCancel={() => setIsAddingAddress(false)}
-                      />
-                    </div>
+                    <AddressComponent
+                      onSave={handleAddAddress}
+                      initialData={newAddress}
+                      onCancel={() => setIsAddingAddress(false)}
+                    />
                   )}
                 </CardContent>
               </Card>
             </div>
 
             {/* Right Column - Order Summary */}
-            <Card className="bg-gradient-to-br from-white to-[#F8FFFC] rounded-2xl shadow-2xl border-2 border-white h-fit">
-              <CardHeader className="bg-gradient-to-r from-[#C9F0DD]/20 to-[#FFD6E8]/20 rounded-t-2xl">
-                <CardTitle className="text-[#2D5016] text-xl font-bold">Order Summary</CardTitle>
-              </CardHeader>
-              <CardContent className="p-6 space-y-4">
-                <div className="space-y-3">
-                  <div className="flex justify-between text-[#2D5016]">
-                    <span>Subtotal ({isCartCheckout ? cart.items.length : quantity} item{isCartCheckout ? cart.items.length > 1 : quantity > 1 ? "s" : ""})</span>
-                    <span className="font-semibold">
-                      {convertPrice(isCartCheckout 
-                        ? cart.items.reduce((total, item) => total + parseFloat(item.product.sale_price || item.product.actual_price) * item.quantity, 0)
-                        : parseFloat(product.sale_price || product.actual_price) * quantity)}
-                    </span>
-                  </div>
-                  <div className="flex justify-between text-[#2D5016]">
-                    <span>Shipping</span>
-                    <span className="font-semibold">
-                      {isPincodeValid && selectedShippingRate ? (
-                        convertPrice(selectedShippingRate.freight_charge)
-                      ) : (
-                        <span className="text-red-600">Not Deliverable</span>
+            <div className="space-y-6">
+              <Card className="bg-white dark:bg-gray-800 shadow-lg border-green-100 dark:border-green-900 sticky top-24">
+                <CardHeader className="bg-green-50 dark:bg-green-900/20 rounded-t-2xl">
+                  <CardTitle className="flex items-center gap-2 text-gray-900 dark:text-white">
+                    <ShoppingCart className="h-5 w-5 text-green-600" />
+                    Order Summary
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="p-6">
+                  <div className="space-y-4">
+                    {/* Order Items */}
+                    <div className="space-y-3">
+                      <div className="flex justify-between text-sm">
+                        <span className="text-gray-600 dark:text-gray-300">
+                          Subtotal ({isCartCheckout ? cart.items.length : quantity} item{isCartCheckout ? cart.items.length > 1 ? "s" : "" : quantity > 1 ? "s" : ""})
+                        </span>
+                        <span className="font-medium">
+                          {convertPrice(isCartCheckout 
+                            ? cart.items.reduce((total, item) => total + parseFloat(item.product.sale_price || item.product.actual_price) * item.quantity, 0)
+                            : parseFloat(product.sale_price || product.actual_price) * quantity)}
+                        </span>
+                      </div>
+
+                      {/* Shipping */}
+                      <div className="flex justify-between text-sm">
+                        <span className="text-gray-600 dark:text-gray-300">Shipping</span>
+                        <span>
+                          {isPincodeValid && selectedShippingRate ? (
+                            <span className="font-medium text-green-600">
+                              {convertPrice(selectedShippingRate.freight_charge)}
+                            </span>
+                          ) : (
+                            <span className="text-red-500 text-xs">Not available</span>
+                          )}
+                        </span>
+                      </div>
+
+                      {!isPincodeValid && (
+                        <div className="bg-red-50 dark:bg-red-900/20 p-3 rounded-lg border border-red-200 dark:border-red-800">
+                          <div className="flex items-center gap-2 text-red-600 dark:text-red-400">
+                            <AlertCircle className="h-4 w-4" />
+                            <span className="text-sm font-medium">{pincodeError}</span>
+                          </div>
+                        </div>
                       )}
-                    </span>
-                  </div>
-                  
-                  {!isPincodeValid && (
-                    <p className="text-red-600 text-sm flex items-center gap-2 bg-red-50 rounded-lg p-2">
-                      <AlertCircle className="h-4 w-4" />
-                      {pincodeError}
-                    </p>
-                  )}
-                  
-                  {isPincodeValid && shippingRates.length > 0 && (
-                    <div>
-                      <Label className="text-[#2D5016] font-medium">Shipping Method</Label>
-                      <Select
-                        value={selectedShippingRate?.courier_company_id}
-                        onValueChange={(value) => {
-                          const rate = shippingRates.find((r) => r.courier_company_id === value);
-                          setSelectedShippingRate(rate);
-                        }}
-                      >
-                        <SelectTrigger className="border-2 border-[#C9F0DD] focus:border-[#FF6B9D]">
-                          <SelectValue placeholder="Select shipping method" />
-                        </SelectTrigger>
-                        <SelectContent className="bg-gradient-to-b from-[#F0FFF8] to-[#FFF0F5] border-2 border-[#C9F0DD]">
-                          {shippingRates.map((rate) => (
-                            <SelectItem key={rate.courier_company_id} value={rate.courier_company_id} className="text-[#2D5016] hover:bg-[#C9F0DD]/20">
-                              {rate.courier_name} - {convertPrice(rate.freight_charge)} ({rate.etd})
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
+
+                      {/* Shipping Methods */}
+                      {isPincodeValid && shippingRates.length > 0 && (
+                        <div className="space-y-2">
+                          <Label className="text-sm font-medium">Shipping Method</Label>
+                          <Select
+                            value={selectedShippingRate?.courier_company_id}
+                            onValueChange={(value) => {
+                              const rate = shippingRates.find((r) => r.courier_company_id === value);
+                              setSelectedShippingRate(rate);
+                            }}
+                          >
+                            <SelectTrigger className="h-10">
+                              <SelectValue placeholder="Select shipping method" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {shippingRates.map((rate) => (
+                                <SelectItem key={rate.courier_company_id} value={rate.courier_company_id}>
+                                  <div className="flex items-center justify-between w-full">
+                                    <span>{rate.courier_name}</span>
+                                    <span className="text-green-600 font-medium">
+                                      {convertPrice(rate.freight_charge)}
+                                    </span>
+                                  </div>
+                                  <div className="text-xs text-gray-500">{rate.etd}</div>
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
+                      )}
+
+                      <Separator />
+
+                      {/* Total */}
+                      <div className="flex justify-between items-center pt-2">
+                        <span className="font-semibold text-lg text-gray-900 dark:text-white">Total</span>
+                        <span className="font-bold text-xl text-green-600">
+                          {convertPrice(totalPriceINR)}
+                        </span>
+                      </div>
                     </div>
-                  )}
-                  
-                  <Separator className="bg-[#C9F0DD]" />
-                  <div className="flex justify-between text-[#2D5016] font-bold text-lg">
-                    <span>Total</span>
-                    <span>{convertPrice(totalPriceINR)}</span>
+
+                    {/* Payment Method */}
+                    <div className="space-y-3">
+                      <Label className="text-sm font-medium">Payment Method</Label>
+                      <Tabs value={paymentMethod} onValueChange={setPaymentMethod} className="w-full">
+                        <TabsList className="grid w-full grid-cols-2">
+                          <TabsTrigger value="online" className="flex items-center gap-2">
+                            <CreditCard className="h-4 w-4" />
+                            Online
+                          </TabsTrigger>
+                          <TabsTrigger value="cod" className="flex items-center gap-2">
+                            <Truck className="h-4 w-4" />
+                            Pay on Delivery
+                          </TabsTrigger>
+                        </TabsList>
+                        <TabsContent value="cod" className="text-xs text-gray-500 mt-2">
+                          Pay when your order is delivered. Additional charges may apply.
+                        </TabsContent>
+                      </Tabs>
+                    </div>
+
+                    {/* Checkout Button */}
+                    <Button
+                      className="w-full h-12 bg-green-600 hover:bg-green-700 text-white font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-200"
+                      onClick={handleCheckout}
+                      disabled={!selectedAddressId || !isPincodeValid || !selectedShippingRate || isCheckingOut || hasOverQuantityItems}
+                    >
+                      {isCheckingOut ? (
+                        <Loader2 className="h-5 w-5 animate-spin mr-2" />
+                      ) : paymentMethod === "cod" ? (
+                        <Truck className="mr-2 h-5 w-5" />
+                      ) : (
+                        <CreditCard className="mr-2 h-5 w-5" />
+                      )}
+                      {paymentMethod === "cod" ? "Place Order (COD)" : "Proceed to Payment"}
+                    </Button>
+
+                    {hasOverQuantityItems && (
+                      <div className="bg-yellow-50 dark:bg-yellow-900/20 p-3 rounded-lg border border-yellow-200 dark:border-yellow-800">
+                        <div className="flex items-center gap-2 text-yellow-600 dark:text-yellow-400">
+                          <AlertCircle className="h-4 w-4" />
+                          <span className="text-sm">Adjust quantities to match available stock</span>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Security Badge */}
+                    <div className="flex items-center justify-center gap-2 pt-4 border-t border-gray-200 dark:border-gray-600">
+                      <Shield className="h-4 w-4 text-green-600" />
+                      <span className="text-xs text-gray-500">Secure 256-bit SSL encrypted</span>
+                    </div>
                   </div>
-                </div>
-                
-                <Button
-                  className="w-full bg-gradient-to-r from-[#C9F0DD] via-[#FFD6E8] to-[#FFF2B2] hover:from-[#B0E8CD] hover:via-[#F5C2D9] hover:to-[#FFE999] text-[#2D5016] font-bold text-lg py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
-                  onClick={handleCheckout}
-                  disabled={!selectedAddressId || !isPincodeValid || !selectedShippingRate || isCheckingOut || hasOverQuantityItems}
-                >
-                  {isCheckingOut ? (
-                    <Loader2 className="h-5 w-5 animate-spin mr-2" />
-                  ) : (
-                    <ShoppingCart className="mr-2 h-5 w-5" />
-                  )}
-                  Proceed to Payment
-                </Button>
-                
-                {hasOverQuantityItems && (
-                  <p className="text-red-600 text-sm bg-red-50 rounded-lg p-3 text-center">
-                    Please ensure all item quantities do not exceed available stock to proceed with payment.
-                  </p>
-                )}
-                
-                {paymentStatus === "error" && (
-                  <p className="text-red-600 text-sm flex items-center gap-2 bg-red-50 rounded-lg p-3">
-                    <AlertCircle className="h-4 w-4" />
-                    Payment Failed. Please try again.
-                  </p>
-                )}
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+
+              {/* Trust Badges */}
+              <Card className="bg-white dark:bg-gray-800 shadow-sm border-green-100 dark:border-green-900">
+                <CardContent className="p-4">
+                  <div className="grid grid-cols-2 gap-4 text-center">
+                    <div className="space-y-1">
+                      <Truck className="h-6 w-6 text-green-600 mx-auto" />
+                      <p className="text-xs font-medium">Free Shipping</p>
+                      <p className="text-xs text-gray-500">Over ₹999</p>
+                    </div>
+                    <div className="space-y-1">
+                      <Clock className="h-6 w-6 text-green-600 mx-auto" />
+                      <p className="text-xs font-medium">Easy Returns</p>
+                      <p className="text-xs text-gray-500">30 Days</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
           </div>
         )}
       </div>

@@ -200,7 +200,7 @@ const CartPage = () => {
         <button
           onClick={() => navigate('/shop/checkout')}
           disabled={hasOutOfStockItems() || hasOverQuantityItems()}
-          className={`w-full px-8 py-3 text-black font-medium rounded-full transition-all duration-300 shadow-md flex items-center justify-center gap-2 ${hasOutOfStockItems() || hasOverQuantityItems() ? "bg-gray-400 cursor-not-allowed" : "bg-gradient-to-r from-yellow-300 via-green-300 to-pink-200 hover:opacity-90"}`}
+          className={`w-full px-8 py-3 text-black font-medium rounded-full transition-all duration-300 shadow-md flex items-center justify-center gap-2 ${hasOutOfStockItems() || hasOverQuantityItems() ? "bg-gray-400 cursor-not-allowed" : "bg-gradient-to-r from-green-800 via-green-300 to-green-200 hover:opacity-90"}`}
         >
           <ShoppingCart className="h-5 w-5" />
           Proceed to Checkout

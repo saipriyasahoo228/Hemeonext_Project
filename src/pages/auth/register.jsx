@@ -173,12 +173,13 @@ export default function Register() {
       <div
   className="w-full max-w-lg p-10 rounded-2xl shadow-2xl"
   style={{
-    background: "linear-gradient(90deg, #d8caeaff 0%, #eed3eaff 50%)",
+    background: "linear-gradient(90deg, #caf2c9ff 0%, #bee6beff 50%)",
     backgroundSize: "200% 100%",
+    
    
   }}
 >
-      <h2 className="text-2xl font-bold text-center text-pink-900 mb-0">
+      <h2 className="text-2xl font-bold text-center text-violet-900 mb-0">
   Register
 </h2>
 
@@ -350,7 +351,7 @@ export default function Register() {
               <Button
                 type="submit"
                 disabled={loadingVerify || !!validationError}
-                className="w-full bg-violet-600 hover:bg-violet-700 dark:bg-indigo-600 dark:hover:bg-indigo-700 text-white font-semibold py-3 rounded-lg flex items-center justify-center text-lg transition-all duration-300"
+                className="w-full bg-green-600 hover:bg-green-700 dark:bg-indigo-600 dark:hover:bg-indigo-700 text-white font-semibold py-3 rounded-lg flex items-center justify-center text-lg transition-all duration-300"
               >
                 {loadingVerify ? (
                   <>

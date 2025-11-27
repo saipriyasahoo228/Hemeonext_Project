@@ -282,8 +282,8 @@ function AuthLogin() {
       <div className="w-full max-w-2xl p-10 rounded-2xl shadow-2xl backdrop-blur-xl"
         style={{
           background:
-            "linear-gradient(135deg, rgba(167,243,208,0.35), rgba(216,180,254,0.35))",
-          border: "1px solid rgba(255,255,255,0.4)",
+            "linear-gradient(135deg, rgba(167,243,208,0.35), rgba(197, 247, 183, 0.35))",
+          border: "1px solid rgba(4, 247, 130, 0.4)",
         }}
       >
         <h2 className="text-3xl pb-8 font-bold text-center text-purple-700 drop-shadow-md">
@@ -373,7 +373,7 @@ function AuthLogin() {
           <Button
             type="submit"
             disabled={loading || !!validationError}
-            className="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 rounded-lg text-lg shadow-lg"
+            className="w-full bg-green-600 hover:bg-green-800 text-white font-semibold py-3 rounded-lg text-lg shadow-lg"
           >
             {loading ? (
               <span className="flex items-center">
