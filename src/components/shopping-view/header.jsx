@@ -369,7 +369,7 @@ hover:from-[rgb(180,255,180)] hover:to-[rgb(22,163,74)]"
                   Login
                 </Button>
                 <Button
-                  className="w-full bg-pink-500 hover:bg-pink-600 text-white font-semibold py-2 rounded-lg"
+                  className="w-full bg-green-500 hover:bg-green-800 text-white font-semibold py-2 rounded-lg"
                   onClick={(e) => {
                     e.stopPropagation();
                     setShowAuthPopup(false);
