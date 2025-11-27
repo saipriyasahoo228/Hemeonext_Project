@@ -94,7 +94,7 @@ function AuthLayout() {
             />
 
             <h1 className="text-3xl md:text-5xl font-semibold tracking-tight drop-shadow-lg">
-              Welcome to HemeoNext
+              Welcome to HomeoNext
             </h1>
           </div>
         </div>
