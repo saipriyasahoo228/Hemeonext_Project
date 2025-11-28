@@ -14,7 +14,7 @@ import jointpain from "../../../public/assets/jointpain.jpg";
 import kids from "../../../public/assets/kids.jpg";
 import offer1 from "../../../public/assets/offer1.jpg";
 import urinary from "../../../public/assets/urinary.jpg";
-import diabetes from "../../../public/assets/diabetes.jpeg";  
+import diabetes from "../../../public/assets/diabetes.jpeg";
 import warts from "../../../public/assets/warts.jpg";
 import cholesterol from "../../../public/assets/cholesterol.webp";
 
@@ -27,9 +27,6 @@ import bJain from "../../../public/assets/B. Jain.jpg";
 import medisynth from "../../../public/assets/Medisynth.jpg";
 import bioforce from "../../../public/assets/Bioforce.jpg";
 import adel from "../../../public/assets/Adel.webp";
-
-
-
 
 // API client function
 import { fetchBrands, fetchCategories } from "../../api/productApi";
@@ -49,7 +46,6 @@ const dummyImages = [
   cholesterol,
 ];
 
-
 const dummyBrandLogos = [
   sblLogo,
   ainsworths,
@@ -61,58 +57,7 @@ const dummyBrandLogos = [
   adel,
 ];
 
-
 const specialOffers = [
-  {
-    id: "offer-1",
-    label: "Family Wellness Package",
-    image: "/assets/offer1.jpg",
-    description: "Complete health package for family of 4 with 3 months supply",
-    originalPrice: "₹4999",
-    discountedPrice: "₹3499",
-    discount: "30% OFF",
-    tag: "MOST POPULAR",
-  },
-  {
-    id: "offer-2",
-    label: "Seasonal Immunity Kit",
-    image: "/assets/offer2.jpg",
-    description: "Special kit for seasonal changes and weather transitions",
-    originalPrice: "₹1999",
-    discountedPrice: "₹1399",
-    discount: "25% OFF",
-    tag: "LIMITED TIME",
-  },
-  {
-    id: "offer-3",
-    label: "Senior Citizen Care",
-    image: "/assets/offer3.jpg",
-    description: "Tailored solutions for age-related health concerns",
-    originalPrice: "₹2999",
-    discountedPrice: "₹2099",
-    discount: "35% OFF",
-    tag: "SPECIAL OFFER",
-  },
-  {
-    id: "offer-4",
-    label: "First Time User Pack",
-    image: "/assets/offer4.jpg",
-    description: "Introductory pack for new customers with guidance booklet",
-    originalPrice: "₹1599",
-    discountedPrice: "₹999",
-    discount: "40% OFF",
-    tag: "BEST VALUE",
-  },
-  {
-    id: "offer-5",
-    label: "Detox & Cleanse Combo",
-    image: "/assets/offer5.jpg",
-    description: "Complete detoxification system for holistic wellness",
-    originalPrice: "₹3599",
-    discountedPrice: "₹2499",
-    discount: "30% OFF",
-    tag: "NEW",
-  },
   {
     id: "offer-1",
     label: "Family Wellness Package",
@@ -202,42 +147,6 @@ const popularTests = [
     duration: "72 hrs",
     price: "₹1899",
   },
-  {
-    id: "test-1",
-    label: "Full Body Wellness Test",
-    image: "/assets/test1.jpg",
-    description: "Comprehensive health assessment with personalized recommendations",
-    tests: "25+ Parameters",
-    duration: "24-48 hrs",
-    price: "₹1499",
-  },
-  {
-    id: "test-2",
-    label: "Immunity Profile Test",
-    image: "/assets/test2.jpg",
-    description: "Detailed analysis of your immune system strength and vitality",
-    tests: "15 Parameters",
-    duration: "24 hrs",
-    price: "₹999",
-  },
-  {
-    id: "test-3",
-    label: "Metabolic Health Check",
-    image: "/assets/test3.jpg",
-    description: "Complete metabolic profile with diet and lifestyle guidance",
-    tests: "18 Parameters",
-    duration: "48 hrs",
-    price: "₹1299",
-  },
-  {
-    id: "test-4",
-    label: "Allergy Sensitivity Test",
-    image: "/assets/test4.jpg",
-    description: "Identify allergens and sensitivities with natural remedy suggestions",
-    tests: "20+ Allergens",
-    duration: "72 hrs",
-    price: "₹1899",
-  },
 ];
 
 const banners = [
@@ -245,6 +154,23 @@ const banners = [
   { id: 2, image: banner5, text: "Natural Healing Solutions!" },
   { id: 3, image: banner6, text: "Family Wellness Packages!" },
 ];
+
+/* ---------- FloatingText component (added) ---------- */
+const FloatingText = ({ text }) => {
+  return (
+    <div className="overflow-hidden whitespace-nowrap py-2">
+      <motion.p
+        initial={{ x: "100%" }}
+        animate={{ x: "-100%" }}
+        transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+        className="text-sm md:text-base font-semibold text-green-900"
+      >
+        {text}
+      </motion.p>
+    </div>
+  );
+};
+/* --------------------------------------------------- */
 
 // Scrollable Carousel Component
 const ScrollableCarousel = ({ items, title, navigate, type = "offers" }) => {
@@ -319,6 +245,13 @@ const ScrollableCarousel = ({ items, title, navigate, type = "offers" }) => {
             </Button>
           </motion.div>
         </div>
+
+        {/* Floating one-line description for the carousel */}
+        {type === "offers" && (
+          <div className="px-4">
+            <FloatingText text="Get amazing savings! Up to 40% OFF on homeopathy wellness kits, family packs, immunity boosters & seasonal offers!" />
+          </div>
+        )}
 
         <div className="relative w-full">
           {showLeftArrow && (
@@ -463,7 +396,7 @@ const BrandCard = ({ brand, index }) => {
       className="flex flex-col items-center bg-white rounded-lg p-4 cursor-pointer"
       whileHover={{
         scale: 1.05,
-         boxShadow: "0 15px 35px rgba(16, 245, 9, 0.35)",
+        boxShadow: "0 15px 35px rgba(16, 245, 9, 0.35)",
         rotate: [0, -2, 2, -2, 2, 0], // vibrate effect
       }}
       transition={{ duration: 0.4 }}
@@ -556,7 +489,7 @@ export default function HomeopathicLayout() {
   return (
     <div className="flex flex-col min-h-screen bg-white">
       {/* Banner Section */}
-      <section className="relative h-[50vh] w-full overflow-hidden">
+      <section className="relative h-[50vh] w-full ">
         <AnimatePresence initial={false}>
           <motion.div
             key={currentBanner}
@@ -588,7 +521,7 @@ export default function HomeopathicLayout() {
                 >
                   <Button
                     onClick={() => navigate("/shop/listing")}
-                    className="px-8 py-4 text-lg font-semibold bg-blue-600 hover:bg-blue-700 text-white rounded-lg"
+                    className="px-8 py-4 text-lg font-semibold bg-green-600 hover:bg-green-800 text-white rounded-lg"
                   >
                     Shop Now
                   </Button>
@@ -601,113 +534,113 @@ export default function HomeopathicLayout() {
 
       {/* Brands Section */}
       <section className="py-16 w-full bg-gray-50">
-  <motion.h2
-    initial={{ opacity: 0, y: 20 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.6 }}
-    viewport={{ once: true }}
-    className="text-3xl md:text-4xl font-bold text-gray-900 text-center mb-8"
-  >
-    Popular Brands
-  </motion.h2>
-
-  {loading ? (
-    <div className="text-center text-gray-500">Loading brands...</div>
-  ) : error ? (
-    <div className="text-center text-red-500">{error}</div>
-  ) : (
-    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 px-4">
-      {brands.map((brand, index) => (
-        <div
-          key={brand.id}
-          className="
-            p-3 rounded-xl bg-white 
-            border border-green-200
-            shadow-[0_0_12px_rgba(0,255,120,0.8),_0_0_20px_rgba(0,255,120,0.4)]
-            transition-all duration-300
-          "
-        >
-          <BrandCard brand={brand} index={index} />
-        </div>
-      ))}
-    </div>
-  )}
-</section>
-
-
-       {/* CATEGORIES GRID - Edge to Edge */}
-   
-       <section className="py-16 bg-white w-full">
-   <div className="w-full px-4">
-
-     {/* HEADER */}
-     <div className="flex flex-col md:flex-row justify-between items-center mb-12">
-      <motion.h2 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="text-3xl md:text-4xl font-bold text-gray-900 text-center md:text-left mb-6 md:mb-0"
-      >
-        Our Treatment Categories
-      </motion.h2>
-
-      <motion.div
-        initial={{ opacity: 0, x: 20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.6, delay: 0.3 }}
-        className="hidden md:block"
-      >
-        <Button
-          onClick={() => navigate("/shop/listing")}
-          className="px-8 py-3 bg-green-600 hover:bg-green-800 text-white font-semibold rounded-lg"
-        >
-          View All Products
-        </Button>
-      </motion.div>
-    </div>
-
-    {/* CATEGORY CARDS (scrollable) */}
-    <div className="flex gap-4 overflow-x-auto no-scrollbar pb-3">
-      {categories.map((cat, index) => (
-        <motion.div
-          key={cat.id}
+        <motion.h2
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, delay: index * 0.1 }}
-          whileHover={{ scale: 1.05 }}
-          onClick={() => navigate(`/shop/listing?category=${toSlug(cat.name)}`)}
-          className="relative min-w-[150px] max-w-[150px] h-[220px] rounded-xl overflow-hidden shadow-md cursor-pointer"
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="text-3xl md:text-4xl font-bold text-gray-900 text-center mb-4"
         >
-          <img
-            // src={cat.image}
-            src={dummyImages[index]}
-            alt={cat.name}
-            className="w-full h-full object-cover"
-          />
+          Popular Brands
+        </motion.h2>
 
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent"></div>
+        {/* Floating one-line description for brands */}
+        <div className="px-4">
+          <FloatingText text="We bring you the world’s most trusted homeopathic brands — SBL, Ainsworths, Dr. Batra’s, Nelsons, Bioforce and more!" />
+        </div>
 
-          <p className="absolute bottom-3 left-3 text-white font-semibold text-sm leading-tight">
-            {cat.name}
-          </p>
-        </motion.div>
-      ))}
-    </div>
+        {loading ? (
+          <div className="text-center text-gray-500">Loading brands...</div>
+        ) : error ? (
+          <div className="text-center text-red-500">{error}</div>
+        ) : (
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 px-4 mt-6">
+            {brands.map((brand, index) => (
+              <div
+                key={brand.id}
+                className="
+                  p-3 rounded-xl bg-white
+                  border border-green-200
+                  shadow-[0_0_12px_rgba(0,255,120,0.8),_0_0_20px_rgba(0,255,120,0.4)]
+                  transition-all duration-300
+                "
+              >
+                <BrandCard brand={brand} index={index} />
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
 
-  </div>
-</section>
+      {/* CATEGORIES GRID - Edge to Edge */}
+      <section className="py-16 bg-white w-full">
+        <div className="w-full px-4">
+          {/* HEADER */}
+          <div className="flex flex-col md:flex-row justify-between items-center mb-12">
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="text-3xl md:text-4xl font-bold text-gray-900 text-center md:text-left mb-6 md:mb-0"
+            >
+              Our Treatment Categories
+            </motion.h2>
+
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="hidden md:block"
+            >
+              <Button
+                onClick={() => navigate("/shop/listing")}
+                className="px-8 py-3 bg-green-600 hover:bg-green-800 text-white font-semibold rounded-lg"
+              >
+                View All Products
+              </Button>
+            </motion.div>
+          </div>
+
+          {/* CATEGORY CARDS (scrollable) */}
+          <div className="flex gap-4 overflow-x-auto no-scrollbar pb-3">
+            {categories.map((cat, index) => (
+              <motion.div
+                key={cat.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: index * 0.1 }}
+                whileHover={{ scale: 1.05 }}
+                onClick={() => navigate(`/shop/listing?category=${toSlug(cat.name)}`)}
+                className="relative min-w-[150px] max-w-[150px] h-[220px] rounded-xl overflow-hidden shadow-md cursor-pointer"
+              >
+                <img
+                  src={dummyImages[index]}
+                  alt={cat.name}
+                  className="w-full h-full object-cover"
+                />
+
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent"></div>
+
+                <p className="absolute bottom-3 left-3 text-white font-semibold text-sm leading-tight">
+                  {cat.name}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* Special Offers Carousel */}
       <ScrollableCarousel items={specialOffers} title="Special Offers" navigate={navigate} type="offers" />
 
       {/* Popular Tests Carousel */}
       <ScrollableCarousel items={popularTests} title="Popular Tests" navigate={navigate} type="tests" />
-      <ProductGrid/>
 
-      
-       {/* CTA SECTION - Edge to Edge */}
-       <section className="py-16 bg-gray-50 w-full">
-         <div className="w-full px-4 text-center">
+      <ProductGrid />
+
+      {/* CTA SECTION - Edge to Edge */}
+      <section className="py-16 bg-gray-50 w-full">
+        <div className="w-full px-4 text-center">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -747,11 +680,11 @@ export default function HomeopathicLayout() {
       </section>
 
       {/* FOOTER - Edge to Edge */}
-      <footer className="bg-gray-900 text-white py-12 w-full">
+      <footer className="bg-green-900 text-white py-12 w-full ">
         <div className="w-full px-4 text-center">
           <p className="text-lg font-semibold mb-2">Homeopathic Healing Center</p>
           <p className="text-gray-400 mb-4">Natural • Safe • Effective</p>
-          
+
           <p className="text-sm mt-4 font-light text-gray-400">
             Developed by{" "}
             <a
@@ -779,7 +712,7 @@ export default function HomeopathicLayout() {
           <div className="mt-8">
             <Button
               onClick={() => navigate("/shop/listing")}
-              className="px-6 py-3 bg-green-600 hover:bg-blue-700 text-white font-semibold rounded-lg"
+              className="px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg"
             >
               Browse All Products
             </Button>

@@ -50,7 +50,7 @@ function ShoppingLayout() {
       {/* Horizontal Categories Navigation Bar */}
       <div className="w-full bg-white shadow-sm border-b border-gray-200 ">
         <MenuComponent categories={categories} />
-      </div>
+      </div >
       
       {/* Page Content */}
       <main className="flex-1 overflow-auto">
